@@ -1,7 +1,9 @@
-import 'package:ecommerce_ostad/app/app_colors.dart';
 import 'package:ecommerce_ostad/app/app_theme_data.dart';
+import 'package:ecommerce_ostad/features/auth/ui/screens/email_verification_screen.dart';
+import 'package:ecommerce_ostad/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:ecommerce_ostad/features/auth/ui/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+
 
 class CrafyBaby extends StatelessWidget {
   const CrafyBaby({super.key});
@@ -12,9 +14,13 @@ class CrafyBaby extends StatelessWidget {
       initialRoute: '/',
       theme: AppThemeData.lightThemeData,
       darkTheme: AppThemeData.darkThemeData,
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       routes: {
-        '/' : (context) => const SplashScreen()
+        '/': (context) => const SplashScreen(),
+        EmailVerificationScreen.name: (context) =>
+            const EmailVerificationScreen(),
+        OtpVerificationScreen.name: (context) =>
+        const OtpVerificationScreen(),
       },
     );
   }
