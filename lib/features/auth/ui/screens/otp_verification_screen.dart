@@ -1,6 +1,11 @@
+import 'dart:async';
+
 import 'package:ecommerce_ostad/app/app_colors.dart';
+import 'package:ecommerce_ostad/app/app_constants.dart';
+import 'package:ecommerce_ostad/features/auth/ui/screens/complete_profile_screen.dart';
 import 'package:ecommerce_ostad/features/auth/ui/widgets/app_icon_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -15,6 +20,28 @@ class OtpVerificationScreen extends StatefulWidget {
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final TextEditingController _otpTEController = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final RxInt _remainingTime = AppConstants.resendOtpTimeOutInSecs.obs;
+  late Timer timer;
+  final RxBool _enableResendCodeButton = false.obs;
+
+  @override
+  void initState() {
+    super.initState();
+    _startResendCodeTime();
+  }
+
+  void _startResendCodeTime() {
+    _enableResendCodeButton.value = false;
+    _remainingTime.value = AppConstants.resendOtpTimeOutInSecs;
+    timer = Timer.periodic(const Duration(seconds: 1), (t) {
+      _remainingTime.value--;
+      setState(() {});
+      if (_remainingTime.value == 0) {
+        t.cancel();
+        _enableResendCodeButton.value = true;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +60,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   "Enter OTP Code",
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
+                const SizedBox(height: 8),
                 Text(
                   "A 4 digit otp has been sent to your email address",
                   style: Theme.of(context)
@@ -58,29 +86,40 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
-                    if (_formkey.currentState!.validate()) {}
+                    // if (_formkey.currentState!.validate()) {}
+                    Navigator.pushNamed(context, CompleteProfileScreen.name);
                   },
                   child: const Text("Next"),
                 ),
                 const SizedBox(height: 24),
                 //TODO: enable button when 120s is done and invisible the text
-                RichText(
-                  text: const TextSpan(
-                    text: "This code will be expire in ",
-                    style: TextStyle(color: Colors.grey),
-                    children: [
-                      TextSpan(
-                        text: '120s',
-                        style: TextStyle(
-                          color: AppColors.themeColor,
+                Obx(() => Visibility(
+                  visible: !_enableResendCodeButton.value,
+                  child: RichText(
+                        text: TextSpan(
+                          text: "This code will be expire in ",
+                          style: const TextStyle(color: Colors.grey),
+                          children: [
+                            TextSpan(
+                              text: '${_remainingTime}s',
+                              style: const TextStyle(
+                                color: AppColors.themeColor,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
+                )),
+                Obx(
+                  () => Visibility(
+                    visible: _enableResendCodeButton.value,
+                    child: TextButton(
+                      onPressed: () {
+                        _startResendCodeTime();
+                      },
+                      child: const Text('Resend Code'),
+                    ),
                   ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text('Resend Code'),
                 ),
               ],
             ),
@@ -88,5 +127,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 }
