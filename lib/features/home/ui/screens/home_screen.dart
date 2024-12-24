@@ -1,5 +1,6 @@
 import 'package:ecommerce_ostad/app/app_colors.dart';
 import 'package:ecommerce_ostad/app/assets_path.dart';
+import 'package:ecommerce_ostad/features/common/ui/controller/main_bottom_nav_controller.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/app_bar_icon_button.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/category_item_widget.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/home_carousal_slider.dart';
@@ -8,6 +9,7 @@ import 'package:ecommerce_ostad/features/home/ui/widgets/product_item_widget.dar
 import 'package:ecommerce_ostad/features/home/ui/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -43,7 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               HomeSectionHeader(
                 title: 'Category',
-                onTap: () {},
+                onTap: () {
+                  Get.find<MainBottomNavController>().moveToCategory();
+                },
               ),
               const SizedBox(
                 height: 8,
