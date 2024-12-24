@@ -46,6 +46,7 @@ class _HomeCarousalSliderState extends State<HomeCarousalSlider> {
             );
           }).toList(),
         ),
+        SizedBox(height: 2,),
         ValueListenableBuilder(
           valueListenable: _selectedIndex,
           builder: (context, value, _){
