@@ -4,11 +4,12 @@ import 'package:ecommerce_ostad/features/home/ui/widgets/app_bar_icon_button.dar
 import 'package:ecommerce_ostad/features/home/ui/widgets/category_item_widget.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/home_carousal_slider.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/home_section_header.dart';
-import 'package:ecommerce_ostad/features/home/ui/widgets/product_item_widget.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+
+import '../../../common/ui/widgets/product_item_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

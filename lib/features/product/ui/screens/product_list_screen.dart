@@ -1,5 +1,6 @@
-import 'package:ecommerce_ostad/features/home/ui/widgets/product_item_widget.dart';
 import 'package:flutter/material.dart';
+
+import '../../../common/ui/widgets/product_item_widget.dart';
 
 class ProductListScreen extends StatefulWidget {
   static const String name = "/product/product-list-by-category";
@@ -23,7 +24,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
         title: Text(widget.categoryName),
       ),
       body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           childAspectRatio: 0.8,
           crossAxisSpacing: 4,
@@ -31,7 +32,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
         ),
         itemCount: 20,
         itemBuilder: (context, index) {
-          return FittedBox(child: const ProductItemWIdget());
+          return const FittedBox(child: ProductItemWIdget());
         },
       ),
     );

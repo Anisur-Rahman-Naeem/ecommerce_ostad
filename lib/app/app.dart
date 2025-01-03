@@ -26,7 +26,6 @@ class CrafyBaby extends StatelessWidget {
       onGenerateRoute: (RouteSettings settings){
         late Widget widget;
         if (settings.name == SplashScreen.name) {
-          print("Entered otp screen");
           widget = const SplashScreen();
         } else if (settings.name == EmailVerificationScreen.name){
           widget = const EmailVerificationScreen();
