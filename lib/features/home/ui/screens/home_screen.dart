@@ -1,4 +1,3 @@
-import 'package:ecommerce_ostad/app/app_colors.dart';
 import 'package:ecommerce_ostad/app/assets_path.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/main_bottom_nav_controller.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/app_bar_icon_button.dart';

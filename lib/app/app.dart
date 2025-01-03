@@ -5,6 +5,7 @@ import 'package:ecommerce_ostad/features/auth/ui/screens/email_verification_scre
 import 'package:ecommerce_ostad/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:ecommerce_ostad/features/auth/ui/screens/splash_screen.dart';
 import 'package:ecommerce_ostad/features/category/ui/screens/category_list_screen.dart';
+import 'package:ecommerce_ostad/features/product/ui/screens/product_details_screen.dart';
 import 'package:ecommerce_ostad/features/product/ui/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,6 +26,7 @@ class CrafyBaby extends StatelessWidget {
       onGenerateRoute: (RouteSettings settings){
         late Widget widget;
         if (settings.name == SplashScreen.name) {
+          print("Entered otp screen");
           widget = const SplashScreen();
         } else if (settings.name == EmailVerificationScreen.name){
           widget = const EmailVerificationScreen();
@@ -39,6 +41,9 @@ class CrafyBaby extends StatelessWidget {
         }else if (settings.name == ProductListScreen.name) {
           String name = settings.arguments as String;
           widget = ProductListScreen(categoryName: name);
+        }else if (settings.name == ProductDetailsScreen.name) {
+          int productId = settings.arguments as int;
+          widget = ProductDetailsScreen(productId: productId);
         }
         return MaterialPageRoute(builder: (ctx) {
           return widget;
