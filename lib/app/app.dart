@@ -5,6 +5,8 @@ import 'package:ecommerce_ostad/features/auth/ui/screens/email_verification_scre
 import 'package:ecommerce_ostad/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:ecommerce_ostad/features/auth/ui/screens/splash_screen.dart';
 import 'package:ecommerce_ostad/features/category/ui/screens/category_list_screen.dart';
+import 'package:ecommerce_ostad/features/product/review/ui/screens/reviews_list_screen.dart';
+import 'package:ecommerce_ostad/features/product/review/ui/screens/writing_review_screen.dart';
 import 'package:ecommerce_ostad/features/product/ui/screens/product_details_screen.dart';
 import 'package:ecommerce_ostad/features/product/ui/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +45,11 @@ class CrafyBaby extends StatelessWidget {
         }else if (settings.name == ProductDetailsScreen.name) {
           int productId = settings.arguments as int;
           widget = ProductDetailsScreen(productId: productId);
+        }else if (settings.name == ReviewsListScreen.name) {
+          int productId = settings.arguments as int;
+          widget = ReviewsListScreen(productId: productId);
+        }else if (settings.name == WritingReviewScreen.name) {
+          widget = WritingReviewScreen();
         }
         return MaterialPageRoute(builder: (ctx) {
           return widget;

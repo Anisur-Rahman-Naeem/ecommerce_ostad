@@ -3,9 +3,8 @@ import 'package:ecommerce_ostad/features/common/ui/widgets/product_quantity_inc_
 import 'package:ecommerce_ostad/features/product/ui/widgets/ProductNameAndDetailsWidget.dart';
 import 'package:ecommerce_ostad/features/product/ui/widgets/colors_picker_widget.dart';
 import 'package:ecommerce_ostad/features/product/ui/widgets/product_image_carousal_slider.dart';
+import 'package:ecommerce_ostad/features/product/ui/widgets/size_picker_widget.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/size_picker_widget.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({
@@ -29,6 +28,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Product Details"),
+        leading: IconButton(onPressed: () {
+          Navigator.pop(context);
+        }, icon: Icon(Icons.arrow_back_ios),),
       ),
       body: Column(
         children: [

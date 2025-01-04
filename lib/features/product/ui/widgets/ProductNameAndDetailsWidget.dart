@@ -1,4 +1,5 @@
 import 'package:ecommerce_ostad/app/app_colors.dart';
+import 'package:ecommerce_ostad/features/product/review/ui/screens/reviews_list_screen.dart';
 import 'package:flutter/material.dart';
 
 class productNameAndDetailsWidget extends StatelessWidget {
@@ -40,7 +41,9 @@ class productNameAndDetailsWidget extends StatelessWidget {
                 ],
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, ReviewsListScreen.name, arguments: 1);
+                },
                 child: Text("Reviews"),
               ),
               Container(
