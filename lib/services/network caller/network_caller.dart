@@ -20,11 +20,17 @@ class NetworkResponse {
 class NetworkCaller {
   final Logger _logger = Logger();
 
-  Future<NetworkResponse> getRequest(String url) async {
+  Future<NetworkResponse> getRequest(String url, {String? accessToken}) async {
     try {
       Uri uri = Uri.parse(url);
+      Map<String, String> headers = {
+        'content-type': 'application/json',
+      };
+      if (accessToken != null) {
+        headers['token'] = accessToken;
+      }
       _logRequest(url);
-      Response response = await get(uri);
+      Response response = await get(uri, headers: headers);
       _logResponse(url, response.statusCode, response.headers, response.body);
       if (response.statusCode == 200) {
         final decodedMessage = jsonDecode(response.body);
@@ -34,12 +40,17 @@ class NetworkCaller {
             responseData: decodedMessage);
       } else {
         return NetworkResponse(
-            isSuccess: false, statusCode: response.statusCode);
+          isSuccess: false,
+          statusCode: response.statusCode,
+        );
       }
     } catch (e) {
       _logResponse(url, -1, null, '', e.toString());
       return NetworkResponse(
-          isSuccess: false, statusCode: -1, errorMessage: e.toString());
+        isSuccess: false,
+        statusCode: -1,
+        errorMessage: e.toString(),
+      );
     }
   }
 
@@ -47,7 +58,9 @@ class NetworkCaller {
       {Map<String, dynamic>? body}) async {
     try {
       Uri uri = Uri.parse(url);
-      Map<String, String> headers = {'content-type': 'application/json'};
+      Map<String, String> headers = {
+        'content-type': 'application/json',
+      };
       _logRequest(url, headers, body);
       Response response =
           await post(uri, headers: headers, body: jsonEncode(body));
@@ -65,7 +78,10 @@ class NetworkCaller {
     } catch (e) {
       _logResponse(url, -1, null, '', e.toString());
       return NetworkResponse(
-          isSuccess: false, statusCode: -1, errorMessage: e.toString());
+        isSuccess: false,
+        statusCode: -1,
+        errorMessage: e.toString(),
+      );
     }
   }
 
