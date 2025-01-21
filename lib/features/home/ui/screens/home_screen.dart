@@ -1,5 +1,7 @@
 import 'package:ecommerce_ostad/app/assets_path.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/main_bottom_nav_controller.dart';
+import 'package:ecommerce_ostad/features/common/ui/widgets/centered_circular_progress_indicator.dart';
+import 'package:ecommerce_ostad/features/home/ui/controllers/home_banner_list_controller.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/app_bar_icon_button.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/category_item_widget.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/home_carousal_slider.dart';
@@ -22,6 +24,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchBarController = TextEditingController();
+  final HomeBannerListController _homeBannerListController =
+      Get.find<HomeBannerListController>();
+
+  @override
+  void initState() {
+    super.initState();
+    _homeBannerListController.getHomeBannerList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +49,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: _searchBarController,
               ),
               const SizedBox(height: 16),
-              const HomeCarousalSlider(),
+              GetBuilder<HomeBannerListController>(
+                builder: (controller) {
+                  if (controller.inProgress) {
+                    return const SizedBox(
+                      height: 180,
+                      child: CenteredCircularProgressIndicator(),
+                    );
+                  }
+                  return HomeCarousalSlider(
+                    bannerList: controller.bannerList,
+                  );
+                }
+              ),
               const SizedBox(
                 height: 16,
               ),
@@ -106,7 +128,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: _getProductList(),
                 ),
               ),
-
             ],
           ),
         ),
@@ -124,6 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     return _categoryList;
   }
+
   List<Widget> _getProductList() {
     List<Widget> _ProductList = [];
     for (int i = 0; i < 10; i++) {

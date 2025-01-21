@@ -50,7 +50,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () {
-                  if (_formkey.currentState!.validate()) {}
+                  if (_formkey.currentState!.validate()) {
+
+                  }
                 },
                 child: const Text("Complete"),
               ),
