@@ -5,4 +5,5 @@ class Urls {
   static String verifyOtpUrl(String email, String otp) => "$_baseurl/VerifyLogin/$email/$otp";
   static String readProfileUrl= "$_baseurl/ReadProfile";
   static String bannerListUrl= "$_baseurl/ListProductSlider";
+  static String categoryListUrl= "$_baseurl/CategoryList";
 }

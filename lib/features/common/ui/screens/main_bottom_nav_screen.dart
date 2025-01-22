@@ -1,6 +1,8 @@
 import 'package:ecommerce_ostad/features/cart/ui/screens/cart_list_screen.dart';
 import 'package:ecommerce_ostad/features/category/ui/screens/category_list_screen.dart';
+import 'package:ecommerce_ostad/features/common/ui/controller/category_list_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/main_bottom_nav_controller.dart';
+import 'package:ecommerce_ostad/features/home/ui/controllers/home_banner_list_controller.dart';
 import 'package:ecommerce_ostad/features/home/ui/screens/home_screen.dart';
 import 'package:ecommerce_ostad/features/wishlist/ui/screens/wish_list_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,15 @@ class MainBottomNavScreen extends StatefulWidget {
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   final MainBottomNavController bottomNavController = Get.find<
       MainBottomNavController>();
+  final HomeBannerListController _homeBannerListController =
+  Get.find<HomeBannerListController>();
+
+  @override
+  void initState() {
+    super.initState();
+    _homeBannerListController.getHomeBannerList();
+    Get.find<CategoryListController>().getCategoryList();
+  }
   final List<Widget> _screens = const [
     HomeScreen(),
     CategoryListScreen(),
