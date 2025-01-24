@@ -15,8 +15,10 @@ class CategoryitemWIdget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, ProductListScreen.name,
-            arguments: "Computer");
+        Navigator.pushNamed(context, ProductListScreen.name, arguments: {
+          'categoryName': categoryModel.categoryName,
+          'categoryId': categoryModel.id
+        });
       },
       child: Column(
         children: [

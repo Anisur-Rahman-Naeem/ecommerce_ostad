@@ -1,11 +1,14 @@
 import 'package:ecommerce_ostad/app/app_colors.dart';
+import 'package:ecommerce_ostad/features/common/data/models/product_model.dart';
 import 'package:ecommerce_ostad/features/product/ui/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProductItemWIdget extends StatelessWidget {
   const ProductItemWIdget({
-    super.key,
+    super.key, required this.productModel,
   });
+
+  final ProductModel productModel;
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +26,18 @@ class ProductItemWIdget extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.all(16.0),
+                height: 80,
                 decoration: BoxDecoration(
                   color: AppColors.themeColor.withOpacity(0.12),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16)),
                 ),
-                child: Image.asset(
-                  "assets/images/nike_shoes.png",
+                child: Image.network(
+                  productModel.image ?? '',
                   width: 140,
-                  height: 80,
+                  height: 90,
+                  fit: BoxFit.scaleDown,
                 ),
               ),
               Padding(
@@ -41,9 +45,9 @@ class ProductItemWIdget extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      "Nike shoe latest collection- RFK1452H",
+                      productModel.title ?? '',
                       maxLines: 1,
-                      style: TextStyle(
+                      style: const TextStyle(
                           overflow: TextOverflow.ellipsis,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -55,14 +59,15 @@ class ProductItemWIdget extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("\$100", style: TextStyle(
+                        Text("\$${productModel.price ?? ''}", style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           color: AppColors.themeColor,
                         ),),
                         Wrap(
                           children: [
-                            Icon(Icons.star, color: Colors.amber, size: 20,),
-                            Text('4.5', style: TextStyle(
+                            const Icon(Icons.star, color: Colors.amber, size: 20,),
+                            Text(
+                              '${productModel.star ?? '0.0'}', style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               color: AppColors.themeColor,
                             ),)
@@ -74,7 +79,7 @@ class ProductItemWIdget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4),
                             color: AppColors.themeColor,
                           ),
-                          child: Icon(Icons.favorite_border, size: 14, color: Colors.white,),
+                          child: const Icon(Icons.favorite_border, size: 14, color: Colors.white,),
                         )
                       ],
                     )
