@@ -1,5 +1,6 @@
 import 'package:ecommerce_ostad/app/assets_path.dart';
-import 'package:ecommerce_ostad/features/auth/ui/screens/email_verification_screen.dart';
+import 'package:ecommerce_ostad/features/auth/ui/screens/sign_in_screen.dart';
+import 'package:ecommerce_ostad/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:ecommerce_ostad/features/auth/ui/widgets/app_icon_widget.dart';
 import 'package:ecommerce_ostad/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:ecommerce_ostad/features/home/ui/screens/home_screen.dart';
@@ -27,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _moveToNextScreen() async {
     await Future.delayed(const Duration(seconds: 2));
-    Navigator.pushReplacementNamed(context, MainBottomNavScreen.name);
+    Navigator.pushReplacementNamed(context, SignUpScreen.name);
   }
 
   @override

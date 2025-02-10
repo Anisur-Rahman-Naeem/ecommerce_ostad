@@ -1,22 +1,37 @@
+import 'package:ecommerce_ostad/features/auth/data/models/sign_up_params.dart';
+import 'package:ecommerce_ostad/features/auth/ui/controllers/sign_up_controller.dart';
+import 'package:ecommerce_ostad/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:ecommerce_ostad/features/auth/ui/widgets/app_icon_widget.dart';
+import 'package:ecommerce_ostad/features/common/ui/widgets/centered_circular_progress_indicator.dart';
+import 'package:ecommerce_ostad/features/common/ui/widgets/snack_bar_message.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class CompleteProfileScreen extends StatefulWidget {
-  const CompleteProfileScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   static const String name = "/complete-profile";
 
   @override
-  State<CompleteProfileScreen> createState() => _CompleteProfileScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
+  // "first_name": "Meskatul",
+  // "last_name": "Islam",
+  // "email": "meskatcse@mail.com",
+  // "password": "123456",
+  // "phone": "01754658781",
+  // "city": "Chattogram"
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
   final TextEditingController _firstNameTEController = TextEditingController();
   final TextEditingController _lastNameTEController = TextEditingController();
   final TextEditingController _mobileTEController = TextEditingController();
   final TextEditingController _cityTEController = TextEditingController();
-  final TextEditingController _shippingAddressTEController = TextEditingController();
+  final TextEditingController _emailTEController = TextEditingController();
+  final TextEditingController _passwordTEController = TextEditingController();
+  final SignUpController _signUpController = SignUpController();
 
 
   @override
@@ -35,12 +50,16 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
               const SizedBox(height: 16),
               Text(
                 "Complete Profile",
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .titleLarge,
               ),
               const SizedBox(height: 8),
               Text(
                 "Get started with us with your details",
-                style: Theme.of(context)
+                style: Theme
+                    .of(context)
                     .textTheme
                     .bodyLarge
                     ?.copyWith(color: Colors.grey),
@@ -48,13 +67,21 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
               const SizedBox(height: 24),
               _buildForm(),
               const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formkey.currentState!.validate()) {
-
-                  }
-                },
-                child: const Text("Complete"),
+              GetBuilder<SignUpController>(
+                builder: (controller) {
+                  return Visibility(
+                    visible: controller.inProgress == false,
+                    replacement: const CenteredCircularProgressIndicator(),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formkey.currentState!.validate()) {
+                          _signUp();
+                        }
+                      },
+                      child: const Text("Sign up"),
+                    ),
+                  );
+                }
               ),
               const SizedBox(height: 24),
             ],
@@ -71,12 +98,33 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
         children: [
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
+            controller: _emailTEController,
+            decoration: const InputDecoration(
+              hintText: 'Email',
+            ),
+            validator: (String? value) {
+              if (value
+                  ?.trim()
+                  .isEmpty ?? true) {
+                return "Enter your email address";
+              }
+              if (EmailValidator.validate(value!) == false) {
+                return "Enter a valid email address";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(height: 8,),
+          TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             controller: _firstNameTEController,
             decoration: const InputDecoration(
               hintText: 'First Name',
             ),
             validator: (String? value) {
-              if (value?.trim().isEmpty ?? true) {
+              if (value
+                  ?.trim()
+                  .isEmpty ?? true) {
                 return 'Enter valid first name';
               }
               return null;
@@ -90,7 +138,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
               hintText: 'Last Name',
             ),
             validator: (String? value) {
-              if (value?.trim().isEmpty ?? true) {
+              if (value
+                  ?.trim()
+                  .isEmpty ?? true) {
                 return 'Enter valid last name';
               }
               return null;
@@ -106,12 +156,13 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
               hintText: 'Mobile',
             ),
             validator: (String? value) {
-              if (value?.trim().isEmpty ?? true) {
+              if (value
+                  ?.trim()
+                  .isEmpty ?? true) {
                 return 'Enter valid mobile number';
               }
               if (RegExp(r'^01[3-9]\d{8}$').hasMatch(value!) == false) {
                 return 'Enter valid mobile number';
-
               }
               return null;
             },
@@ -124,7 +175,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
               hintText: 'City',
             ),
             validator: (String? value) {
-              if (value?.trim().isEmpty ?? true) {
+              if (value
+                  ?.trim()
+                  .isEmpty ?? true) {
                 return 'Enter valid city name';
               }
               return null;
@@ -133,14 +186,15 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           const SizedBox(height: 8),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: _shippingAddressTEController,
-            maxLines: 3,
+            controller: _passwordTEController,
             decoration: const InputDecoration(
-              hintText: 'Shipping Address',
+              hintText: 'Password',
             ),
             validator: (String? value) {
-              if (value?.trim().isEmpty ?? true) {
-                return 'Enter valid shipping address';
+              if ((value
+                  ?.trim()
+                  .isEmpty ?? true) || value!.length < 6) {
+                return 'Enter a password more than 6 letters';
               }
               return null;
             },
@@ -151,13 +205,30 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     );
   }
 
+  Future<void> _signUp() async {
+    SignUpParams params = SignUpParams(
+      password: _passwordTEController.text,
+      email: _emailTEController.text.trim(),
+      firstName: _firstNameTEController.text.trim(),
+      lastName: _lastNameTEController.text.trim(),
+      city: _cityTEController.text.trim(),
+      mobile: _mobileTEController.text.trim(),
+    );
+    final bool isSuccess = await _signUpController.signUp(params);
+    if (isSuccess) {
+      Navigator.pushNamed(context, OtpVerificationScreen.name, arguments: _emailTEController.text.trim());
+    } else {
+      showSnackBarMessage(context, _signUpController.errorMessage!);
+    }
+  }
+
   @override
   void dispose() {
     _firstNameTEController.dispose();
     _lastNameTEController.dispose();
     _mobileTEController.dispose();
     _cityTEController.dispose();
-    _shippingAddressTEController.dispose();
+    _emailTEController.dispose();
     super.dispose();
   }
 }

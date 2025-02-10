@@ -1,27 +1,27 @@
-import 'package:ecommerce_ostad/features/auth/ui/controllers/email_verification_controller.dart';
+import 'package:ecommerce_ostad/features/auth/ui/controllers/sign_In_Controller.dart';
 import 'package:ecommerce_ostad/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:ecommerce_ostad/features/auth/ui/widgets/app_icon_widget.dart';
+import 'package:ecommerce_ostad/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/snack_bar_message.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class EmailVerificationScreen extends StatefulWidget {
-  const EmailVerificationScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
-  static const String name = "/email-verification";
+  static const String name = "/sign-in";
 
   @override
-  State<EmailVerificationScreen> createState() =>
-      _EmailVerificationScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailTEController = TextEditingController();
+  final TextEditingController _passwordTEController = TextEditingController();
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-  final EmailVerficationController _emailVerficationController =
-      Get.find<EmailVerficationController>();
+  final SignInController _signInController = Get.find<SignInController>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +52,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: _emailTEController,
                   keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
                   decoration: const InputDecoration(hintText: "Email Address"),
                   validator: (String? value) {
                     if (value?.trim().isEmpty ?? true) {
@@ -63,14 +64,28 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                     return null;
                   },
                 ),
+                const SizedBox(height: 8),
+                TextFormField(
+                  obscureText: true,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: _passwordTEController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(hintText: "Password"),
+                  validator: (String? value) {
+                    if (value?.trim().isEmpty ?? true) {
+                      return "Enter your password";
+                    }
+                    return null;
+                  },
+                ),
                 const SizedBox(height: 24),
-                GetBuilder<EmailVerficationController>(builder: (controller) {
+                GetBuilder<SignInController>(builder: (controller) {
                   if (controller.inProgress) {
                     return const CenteredCircularProgressIndicator();
                   }
                   return ElevatedButton(
                     onPressed: _onTapNextButton,
-                    child: const Text("Next"),
+                    child: const Text("Sign in"),
                   );
                 })
               ],
@@ -83,20 +98,21 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
 
   void _onTapNextButton() async {
     if (_formkey.currentState!.validate()) {
-      bool isSuccess = await _emailVerficationController
-          .verifyEmail(_emailTEController.text.trim());
+      bool isSuccess = await _signInController.signIn(
+        _emailTEController.text.trim(),
+        _passwordTEController.text.trim(),
+      );
       if (isSuccess) {
         if (mounted) {
           Navigator.pushNamed(
             context,
-            OtpVerificationScreen.name,
+            MainBottomNavScreen.name,
             arguments: _emailTEController.text.trim(),
           );
         }
       } else {
         if (mounted) {
-          showSnackBarMessage(
-              context, _emailVerficationController.errorMessage!);
+          showSnackBarMessage(context, _signInController.errorMessage!);
         }
       }
     }
