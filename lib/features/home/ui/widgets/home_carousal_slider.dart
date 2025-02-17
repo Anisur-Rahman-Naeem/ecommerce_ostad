@@ -30,7 +30,7 @@ class _HomeCarousalSliderState extends State<HomeCarousalSlider> {
               _selectedIndex.value = currentIndex;
             },
           ),
-          items: widget.bannerList!.map((banner) {
+          items: widget.bannerList?.map((banner) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(

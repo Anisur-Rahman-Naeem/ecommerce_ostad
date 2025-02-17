@@ -1,6 +1,5 @@
-import 'package:ecommerce_ostad/features/auth/ui/controllers/sign_In_Controller.dart';
+import 'package:ecommerce_ostad/features/auth/ui/controllers/sign_In_controller.dart';
 import 'package:ecommerce_ostad/features/auth/ui/controllers/otp_verification_controller.dart';
-import 'package:ecommerce_ostad/features/auth/ui/controllers/read_profile_controller.dart';
 import 'package:ecommerce_ostad/features/auth/ui/controllers/sign_up_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/auth_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/category_list_controller.dart';
@@ -20,7 +19,6 @@ class ControllerBinder extends Bindings {
     Get.put(NetworkCaller());
     Get.put(SignInController());
     Get.put(OTPVerficationController());
-    Get.put(ReadProfileController());
     Get.put(AuthController());
     Get.put(HomeBannerListController());
     Get.put(CategoryListController());

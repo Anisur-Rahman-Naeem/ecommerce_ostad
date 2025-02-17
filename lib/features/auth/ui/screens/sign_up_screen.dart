@@ -33,7 +33,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordTEController = TextEditingController();
   final SignUpController _signUpController = SignUpController();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,16 +49,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 16),
               Text(
                 "Complete Profile",
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .titleLarge,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 8),
               Text(
                 "Get started with us with your details",
-                style: Theme
-                    .of(context)
+                style: Theme.of(context)
                     .textTheme
                     .bodyLarge
                     ?.copyWith(color: Colors.grey),
@@ -67,22 +62,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 24),
               _buildForm(),
               const SizedBox(height: 24),
-              GetBuilder<SignUpController>(
-                builder: (controller) {
-                  return Visibility(
-                    visible: controller.inProgress == false,
-                    replacement: const CenteredCircularProgressIndicator(),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formkey.currentState!.validate()) {
-                          _signUp();
-                        }
-                      },
-                      child: const Text("Sign up"),
-                    ),
-                  );
-                }
-              ),
+              GetBuilder<SignUpController>(builder: (controller) {
+                return Visibility(
+                  visible: controller.inProgress == false,
+                  replacement: const CenteredCircularProgressIndicator(),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formkey.currentState!.validate()) {
+                        _signUp();
+                      }
+                    },
+                    child: const Text("Sign up"),
+                  ),
+                );
+              }),
               const SizedBox(height: 24),
             ],
           ),
@@ -103,9 +96,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               hintText: 'Email',
             ),
             validator: (String? value) {
-              if (value
-                  ?.trim()
-                  .isEmpty ?? true) {
+              if (value?.trim().isEmpty ?? true) {
                 return "Enter your email address";
               }
               if (EmailValidator.validate(value!) == false) {
@@ -114,7 +105,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
               return null;
             },
           ),
-          const SizedBox(height: 8,),
+          const SizedBox(
+            height: 8,
+          ),
           TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             controller: _firstNameTEController,
@@ -122,9 +115,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               hintText: 'First Name',
             ),
             validator: (String? value) {
-              if (value
-                  ?.trim()
-                  .isEmpty ?? true) {
+              if (value?.trim().isEmpty ?? true) {
                 return 'Enter valid first name';
               }
               return null;
@@ -138,9 +129,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               hintText: 'Last Name',
             ),
             validator: (String? value) {
-              if (value
-                  ?.trim()
-                  .isEmpty ?? true) {
+              if (value?.trim().isEmpty ?? true) {
                 return 'Enter valid last name';
               }
               return null;
@@ -156,9 +145,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               hintText: 'Mobile',
             ),
             validator: (String? value) {
-              if (value
-                  ?.trim()
-                  .isEmpty ?? true) {
+              if (value?.trim().isEmpty ?? true) {
                 return 'Enter valid mobile number';
               }
               if (RegExp(r'^01[3-9]\d{8}$').hasMatch(value!) == false) {
@@ -175,9 +162,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               hintText: 'City',
             ),
             validator: (String? value) {
-              if (value
-                  ?.trim()
-                  .isEmpty ?? true) {
+              if (value?.trim().isEmpty ?? true) {
                 return 'Enter valid city name';
               }
               return null;
@@ -191,9 +176,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               hintText: 'Password',
             ),
             validator: (String? value) {
-              if ((value
-                  ?.trim()
-                  .isEmpty ?? true) || value!.length < 6) {
+              if ((value?.trim().isEmpty ?? true) || value!.length < 6) {
                 return 'Enter a password more than 6 letters';
               }
               return null;
@@ -216,7 +199,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
     final bool isSuccess = await _signUpController.signUp(params);
     if (isSuccess) {
-      Navigator.pushNamed(context, OtpVerificationScreen.name, arguments: _emailTEController.text.trim());
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => OtpVerificationScreen(
+          email: _emailTEController.text,
+        )),
+      );
     } else {
       showSnackBarMessage(context, _signUpController.errorMessage!);
     }

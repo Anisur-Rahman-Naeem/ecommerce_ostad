@@ -1,4 +1,4 @@
-import 'package:ecommerce_ostad/features/auth/ui/controllers/sign_In_Controller.dart';
+import 'package:ecommerce_ostad/features/auth/ui/controllers/sign_In_controller.dart';
 import 'package:ecommerce_ostad/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:ecommerce_ostad/features/auth/ui/widgets/app_icon_widget.dart';
 import 'package:ecommerce_ostad/features/common/ui/screens/main_bottom_nav_screen.dart';

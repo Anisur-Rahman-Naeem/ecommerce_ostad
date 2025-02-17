@@ -11,7 +11,7 @@ class HomeBannerListController extends GetxController {
 
   BannerListModel? _bannerListModel;
 
-  List<BannerModel>? get bannerList => _bannerListModel!.bannerList ?? [];
+  List<BannerModel>? get bannerList => _bannerListModel?.bannerList ?? [];
 
   String? _errorMessage;
 
