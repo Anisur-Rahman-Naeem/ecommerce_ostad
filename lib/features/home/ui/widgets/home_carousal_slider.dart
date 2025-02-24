@@ -1,15 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce_ostad/app/app_colors.dart';
-import 'package:ecommerce_ostad/features/home/data/models/BannerModel.dart';
+import 'package:ecommerce_ostad/features/home/data/models/slider_model.dart';
 import 'package:flutter/material.dart';
 
 class HomeCarousalSlider extends StatefulWidget {
   const HomeCarousalSlider({
     super.key,
-    required this.bannerList,
+    required this.sliderList,
   });
 
-  final List<BannerModel>? bannerList;
+  final List<SliderModel>? sliderList;
 
   @override
   State<HomeCarousalSlider> createState() => _HomeCarousalSliderState();
@@ -30,7 +30,7 @@ class _HomeCarousalSliderState extends State<HomeCarousalSlider> {
               _selectedIndex.value = currentIndex;
             },
           ),
-          items: widget.bannerList?.map((banner) {
+          items: widget.sliderList?.map((banner) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(
@@ -40,7 +40,7 @@ class _HomeCarousalSliderState extends State<HomeCarousalSlider> {
                       color: Colors.amber,
                       borderRadius: BorderRadius.circular(8),
                       image: DecorationImage(
-                        image: NetworkImage(banner.image ?? ''),
+                        image: NetworkImage(banner.photoUrl ?? ''),
                         fit: BoxFit.cover
                       ),
                     ),
@@ -51,7 +51,7 @@ class _HomeCarousalSliderState extends State<HomeCarousalSlider> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            banner.title ?? '',
+                            banner.description ?? '',
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               fontSize: 17,
@@ -79,7 +79,7 @@ class _HomeCarousalSliderState extends State<HomeCarousalSlider> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  for (int i = 0; i < widget.bannerList!.length; i++)
+                  for (int i = 0; i < widget.sliderList!.length; i++)
                     Container(
                       width: 10,
                       height: 10,

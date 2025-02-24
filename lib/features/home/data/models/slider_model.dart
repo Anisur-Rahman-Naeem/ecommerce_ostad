@@ -3,8 +3,8 @@ class SliderModel {
   String? photoUrl;
   String? description;
   String? product;
-  Null? brand;
-  Null? category;
+  String? brand;
+  String? category;
   String? createdAt;
   String? updatedAt;
   int? iV;

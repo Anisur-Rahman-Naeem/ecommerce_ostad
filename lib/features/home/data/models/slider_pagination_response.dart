@@ -1,14 +1,14 @@
 import 'package:ecommerce_ostad/features/home/data/models/slider_list_data_model.dart';
 
-class SlidePaginationResponse {
+class SlidePaginationModel {
   int? code;
   String? status;
   String? msg;
   SliderListDataModel? data;
 
-  SlidePaginationResponse({this.code, this.status, this.msg, this.data});
+  SlidePaginationModel({this.code, this.status, this.msg, this.data});
 
-  SlidePaginationResponse.fromJson(Map<String, dynamic> json) {
+  SlidePaginationModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     status = json['status'];
     msg = json['msg'];

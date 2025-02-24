@@ -5,7 +5,7 @@ import 'package:ecommerce_ostad/features/common/ui/controller/category_list_cont
 import 'package:ecommerce_ostad/features/common/ui/controller/main_bottom_nav_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:ecommerce_ostad/features/home/ui/controllers/popular_product_list_controller.dart';
-import 'package:ecommerce_ostad/features/home/ui/controllers/home_banner_list_controller.dart';
+import 'package:ecommerce_ostad/features/home/ui/controllers/slider_list_controller.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/app_bar_icon_button.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/category_item_widget.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/home_carousal_slider.dart';
@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: _searchBarController,
               ),
               const SizedBox(height: 16),
-              GetBuilder<HomeBannerListController>(builder: (controller) {
+              GetBuilder<SliderListController>(builder: (controller) {
                 if (controller.inProgress) {
                   return const SizedBox(
                     height: 180,
@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 }
                 return HomeCarousalSlider(
-                  bannerList: controller.bannerList,
+                  sliderList: controller.bannerList,
                 );
               }),
               const SizedBox(

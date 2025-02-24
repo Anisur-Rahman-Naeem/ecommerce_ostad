@@ -1,30 +1,30 @@
 import 'package:ecommerce_ostad/app/urls.dart';
-import 'package:ecommerce_ostad/features/home/data/models/BannerModel.dart';
-import 'package:ecommerce_ostad/features/home/data/models/banner_list_model.dart';
+import 'package:ecommerce_ostad/features/home/data/models/slider_model.dart';
+import 'package:ecommerce_ostad/features/home/data/models/slider_pagination_response.dart';
 import 'package:ecommerce_ostad/services/network%20caller/network_caller.dart';
 import 'package:get/get.dart';
 
-class HomeBannerListController extends GetxController {
+class SliderListController extends GetxController {
   bool _inProgress = false;
 
   bool get inProgress => _inProgress;
 
-  BannerListModel? _bannerListModel;
+  SlidePaginationModel? _slidePaginationModel;
 
-  List<BannerModel>? get bannerList => _bannerListModel?.bannerList ?? [];
+  List<SliderModel>? get bannerList => _slidePaginationModel?.data?.results ?? [];
 
   String? _errorMessage;
 
   String? get errorMessage => _errorMessage;
 
-  Future<bool> getHomeBannerList() async {
+  Future<bool> getSliders() async {
     bool isSuccess = false;
     _inProgress = true;
     update();
     final NetworkResponse response =
-        await Get.find<NetworkCaller>().getRequest(Urls.bannerListUrl);
+        await Get.find<NetworkCaller>().getRequest(Urls.homeSliderUrl);
     if (response.isSuccess) {
-      _bannerListModel = BannerListModel.fromJson(response.responseData);
+      _slidePaginationModel = SlidePaginationModel.fromJson(response.responseData);
       isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;

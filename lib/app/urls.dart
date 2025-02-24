@@ -5,6 +5,7 @@ class Urls {
   static String signUpUrl = "$_baseurl/auth/signup";
   static String verifyOtpUrl =  "$_baseurl/auth/verify-otp";
   static String readProfileUrl= "$_baseurl/ReadProfile";
+  static String homeSliderUrl= "$_baseurl/slides";
   static String bannerListUrl= "$_baseurl/ListProductSlider";
   static String categoryListUrl= "$_baseurl/CategoryList";
 
