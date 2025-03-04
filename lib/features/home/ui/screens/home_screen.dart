@@ -1,5 +1,5 @@
 import 'package:ecommerce_ostad/app/assets_path.dart';
-import 'package:ecommerce_ostad/features/common/data/models/category_model.dart';
+import 'package:ecommerce_ostad/features/common/data/models/category/category_pagination_model.dart';
 import 'package:ecommerce_ostad/features/common/data/models/product_model.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/category_list_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/main_bottom_nav_controller.dart';
@@ -11,6 +11,7 @@ import 'package:ecommerce_ostad/features/home/ui/widgets/category_item_widget.da
 import 'package:ecommerce_ostad/features/home/ui/widgets/home_carousal_slider.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/home_section_header.dart';
 import 'package:ecommerce_ostad/features/home/ui/widgets/search_bar.dart';
+import 'package:ecommerce_ostad/features/product/data/models/product_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -86,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 16,
               ),
               HomeSectionHeader(
-                title: 'Popular',
+                title: 'All Products',
                 onTap: () {},
               ),
               const SizedBox(
@@ -102,41 +103,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 return SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: _getProductList(controller.productList),
+                    children: _getProductList(controller.productList ?? []),
                   ),
                 );
               }),
               const SizedBox(
                 height: 16,
-              ),
-              HomeSectionHeader(
-                title: 'Special',
-                onTap: () {},
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: _getProductList([]),
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              HomeSectionHeader(
-                title: 'New',
-                onTap: () {},
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: _getProductList([]),
-                ),
               ),
             ],
           ),
@@ -145,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  List<Widget> _getCategoryList(List<CategoryModel> categoryModels) {
+  List<Widget> _getCategoryList(List<CategoryItemModel> categoryModels) {
     List<Widget> categoryList = [];
     for (int i = 0; i < categoryModels.length; i++) {
       categoryList.add(Padding(
@@ -158,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return categoryList;
   }
 
-  List<Widget> _getProductList(List<ProductModel> productList) {
+  List<Widget> _getProductList(List<ProductDetailsModel> productList) {
     List<Widget> list = [];
     for (int i = 0; i < productList.length; i++) {
       list.add( Padding(

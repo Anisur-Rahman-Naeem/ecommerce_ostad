@@ -1,5 +1,5 @@
 import 'package:ecommerce_ostad/app/app_colors.dart';
-import 'package:ecommerce_ostad/features/common/data/models/product_model.dart';
+import 'package:ecommerce_ostad/features/product/data/models/product_details_model.dart';
 import 'package:ecommerce_ostad/features/product/ui/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,7 @@ class ProductItemWIdget extends StatelessWidget {
     super.key, required this.productModel,
   });
 
-  final ProductModel productModel;
+  final ProductDetailsModel productModel;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +33,8 @@ class ProductItemWIdget extends StatelessWidget {
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16)),
                 ),
-                child: Image.network(
-                  productModel.image ?? '',
+                child: Image.asset(
+                 'assets/images/nike_shoes.png',
                   width: 140,
                   height: 90,
                   fit: BoxFit.scaleDown,
@@ -59,15 +59,15 @@ class ProductItemWIdget extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("\$${productModel.price ?? ''}", style: const TextStyle(
+                        Text("\$${productModel.currentPrice ?? ''}", style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           color: AppColors.themeColor,
                         ),),
-                        Wrap(
+                        const Wrap(
                           children: [
-                            const Icon(Icons.star, color: Colors.amber, size: 20,),
+                            Icon(Icons.star, color: Colors.amber, size: 20,),
                             Text(
-                              '${productModel.star ?? '0.0'}', style: const TextStyle(
+                              '4.5', style: TextStyle(
                               fontWeight: FontWeight.w600,
                               color: AppColors.themeColor,
                             ),)

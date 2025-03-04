@@ -1,13 +1,14 @@
 import 'package:ecommerce_ostad/app/app_colors.dart';
 import 'package:ecommerce_ostad/app/assets_path.dart';
+import 'package:ecommerce_ostad/features/cart/ui/model/cart_model.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/product_quantity_inc_dec_button.dart';
 import 'package:flutter/material.dart';
 
 class CartProductItemWidget extends StatelessWidget {
   const CartProductItemWidget({
-    super.key,
+    super.key, required this.cartModel,
   });
-
+  final CartModel cartModel;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class CartProductItemWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 14),
         child: Row(
           children: [
-            Image.asset(
+            Image.network(
               AssetsPath.dummyImage,
               width: 90,
               height: 90,

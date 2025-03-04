@@ -1,6 +1,6 @@
 import 'package:ecommerce_ostad/app/urls.dart';
 import 'package:ecommerce_ostad/features/common/data/models/product_list_model.dart';
-import 'package:ecommerce_ostad/features/common/data/models/product_model.dart';
+import 'package:ecommerce_ostad/features/product/data/models/product_details_model.dart';
 import 'package:ecommerce_ostad/services/network%20caller/network_caller.dart';
 import 'package:get/get.dart';
 
@@ -11,13 +11,13 @@ class ProductListController extends GetxController {
 
   ProductListModel? _productListModel;
 
-  List<ProductModel> get productList => _productListModel?.productList ?? [];
+  List<ProductDetailsModel> get productList => _productListModel?.productList ?? [];
 
   String? _errorMessage;
 
   String? get errorMessage => _errorMessage;
 
-  Future<bool> getProductListByCategory(int categoryId) async {
+  Future<bool> getProductListByCategory(String categoryId) async {
     bool isSuccess = false;
     _inProgress = true;
     update();

@@ -1,6 +1,6 @@
-import 'package:ecommerce_ostad/features/common/ui/controller/product_list_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/product_item_widget.dart';
+import 'package:ecommerce_ostad/features/home/ui/controllers/product_list_by_category_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +14,7 @@ class ProductListScreen extends StatefulWidget {
   });
 
   final String categoryName;
-  final int categoryId;
+  final String categoryId;
 
   @override
   State<ProductListScreen> createState() => _ProductListScreenState();
@@ -24,8 +24,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<ProductListController>()
-        .getProductListByCategory(widget.categoryId);
+    Get.find<ProductListByCategoryController>().getProductList(widget.categoryId);
   }
 
   @override
@@ -40,7 +39,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
           icon: const Icon(Icons.arrow_back_ios),
         ),
       ),
-      body: GetBuilder<ProductListController>(builder: (controller) {
+      body: GetBuilder<ProductListByCategoryController>(builder: (controller) {
         if (controller.inProgress) {
           return const CenteredCircularProgressIndicator();
         }

@@ -1,6 +1,4 @@
 import 'package:ecommerce_ostad/app/urls.dart';
-import 'package:ecommerce_ostad/features/home/data/models/BannerModel.dart';
-import 'package:ecommerce_ostad/features/home/data/models/banner_list_model.dart';
 import 'package:ecommerce_ostad/features/product/data/models/product_details_model.dart';
 import 'package:ecommerce_ostad/services/network%20caller/network_caller.dart';
 import 'package:get/get.dart';
@@ -12,7 +10,7 @@ class ProductDetailsController extends GetxController {
 
   ProductDetailsModel? _productDetailsModel;
 
-  ProductDetails? get productDetails => _productDetailsModel?.data!.first;
+  ProductDetailsModel? get productDetailsModel => _productDetailsModel;
 
   String? _errorMessage;
 
@@ -25,7 +23,7 @@ class ProductDetailsController extends GetxController {
     final NetworkResponse response =
     await Get.find<NetworkCaller>().getRequest(Urls.productDetailsUrl(productId));
     if (response.isSuccess) {
-      _productDetailsModel = ProductDetailsModel.fromJson(response.responseData);
+      ProductDetailsModel _productDetailsModel = ProductDetailsModel.fromJson(response.responseData);
       isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;

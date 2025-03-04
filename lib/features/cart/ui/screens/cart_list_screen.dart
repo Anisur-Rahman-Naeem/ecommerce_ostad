@@ -1,7 +1,9 @@
 import 'package:ecommerce_ostad/app/app_colors.dart';
 import 'package:ecommerce_ostad/app/assets_path.dart';
 import 'package:ecommerce_ostad/features/cart/ui/widgets/cart_product_item_widget.dart';
+import 'package:ecommerce_ostad/features/common/ui/controller/cart_list_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/main_bottom_nav_controller.dart';
+import 'package:ecommerce_ostad/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/product_quantity_inc_dec_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +16,12 @@ class CartListScreen extends StatefulWidget {
 }
 
 class _CartListScreenState extends State<CartListScreen> {
+  CartListController cartListController = Get.find<CartListController>();
+  @override
+  void initState() {
+    cartListController.getCartList();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -31,18 +39,25 @@ class _CartListScreenState extends State<CartListScreen> {
             icon: const Icon(Icons.arrow_back_ios),
           ),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return CartProductItemWidget();
-                },
-              ),
-            ),
-            _buildPriceAndCheckoutSection(textTheme)
-          ],
+        body: GetBuilder<CartListController>(
+          builder: (controller) {
+            if(controller.inProgress){
+              return const CenteredCircularProgressIndicator();
+            }
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.cartList.length,
+                    itemBuilder: (context, index) {
+                      return CartProductItemWidget(cartModel: controller.cartList[index],);
+                    },
+                  ),
+                ),
+                _buildPriceAndCheckoutSection(textTheme)
+              ],
+            );
+          }
         ),
       ),
     );

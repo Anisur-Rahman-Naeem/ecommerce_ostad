@@ -1,30 +1,30 @@
 import 'package:ecommerce_ostad/app/urls.dart';
-import 'package:ecommerce_ostad/features/common/data/models/product_list_model.dart';
-import 'package:ecommerce_ostad/features/common/data/models/product_model.dart';
+import 'package:ecommerce_ostad/features/cart/ui/model/cart_list_model.dart';
+import 'package:ecommerce_ostad/features/cart/ui/model/cart_model.dart';
+import 'package:ecommerce_ostad/features/common/data/models/category/category_pagination_model.dart';
 import 'package:ecommerce_ostad/services/network%20caller/network_caller.dart';
 import 'package:get/get.dart';
 
-class ProductListByRemarkController extends GetxController {
+class CartListController extends GetxController {
   bool _inProgress = false;
-
   bool get inProgress => _inProgress;
 
-  ProductListModel? _productListModel;
+  final List<CartModel> _cartList = [];
 
-  List<ProductModel> get productList => _productListModel?.productList ?? [];
+  List<CartModel> get cartList => _cartList;
 
   String? _errorMessage;
 
   String? get errorMessage => _errorMessage;
 
-  Future<bool> getProductList() async {
+  Future<bool> getCartList() async {
     bool isSuccess = false;
     _inProgress = true;
     update();
     final NetworkResponse response =
-        await Get.find<NetworkCaller>().getRequest(Urls.productListByRemarkUrl('Popular'));
+        await Get.find<NetworkCaller>().getRequest(Urls.cartUrl);
     if (response.isSuccess) {
-      _productListModel = ProductListModel.fromJson(response.responseData);
+      CartList cartList= CartList.fromJson(response.responseData);
       isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;

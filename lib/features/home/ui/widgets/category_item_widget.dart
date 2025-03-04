@@ -1,5 +1,5 @@
 import 'package:ecommerce_ostad/app/app_colors.dart';
-import 'package:ecommerce_ostad/features/common/data/models/category_model.dart';
+import 'package:ecommerce_ostad/features/common/data/models/category/category_pagination_model.dart';
 import 'package:ecommerce_ostad/features/product/ui/screens/product_list_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -9,15 +9,15 @@ class CategoryitemWIdget extends StatelessWidget {
     required this.categoryModel,
   });
 
-  final CategoryModel categoryModel;
+  final CategoryItemModel categoryModel;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, ProductListScreen.name, arguments: {
-          'categoryName': categoryModel.categoryName,
-          'categoryId': categoryModel.id
+          'categoryName': categoryModel.title,
+          'categoryId': categoryModel.sId
         });
       },
       child: Column(
@@ -28,7 +28,7 @@ class CategoryitemWIdget extends StatelessWidget {
                 color: AppColors.themeColor.withOpacity(0.12),
                 borderRadius: BorderRadius.circular(8)),
             child: Image.network(
-              categoryModel.categoryImg ?? '',
+              categoryModel.icon ?? '',
               width: 40,
               height: 40,
               fit: BoxFit.scaleDown,
@@ -38,8 +38,8 @@ class CategoryitemWIdget extends StatelessWidget {
             height: 4,
           ),
           Text(
-            categoryModel.categoryName ?? '',
-            style: TextStyle(
+            categoryModel.title ?? '',
+            style: const TextStyle(
               fontSize: 16,
               color: AppColors.themeColor,
               fontWeight: FontWeight.w500,

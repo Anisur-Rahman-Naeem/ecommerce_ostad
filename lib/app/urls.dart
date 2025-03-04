@@ -7,12 +7,14 @@ class Urls {
   static String readProfileUrl= "$_baseurl/ReadProfile";
   static String homeSliderUrl= "$_baseurl/slides";
   static String bannerListUrl= "$_baseurl/ListProductSlider";
-  static String categoryListUrl= "$_baseurl/CategoryList";
+  static String categoryListUrl= "$_baseurl/categories";
+  static String cartUrl= "$_baseurl/cart";
 
   static String productListByRemarkUrl(String remark) =>
       "$_baseurl/ListProductByRemark/$remark";
-  static String productListByCategoryUrl(int categoryId) =>
-      "$_baseurl/ListProductByCategory/$categoryId";
+  static String productListByCategoryUrl(String categoryId) =>
+      "$_baseurl/products?category=$categoryId";
   static String productDetailsUrl(int productId) =>
-      "$_baseurl/ProductDetailsById/$productId";
+      "$_baseurl/products/id/:$productId";
+  static String productList = "$_baseurl/products";
 }
