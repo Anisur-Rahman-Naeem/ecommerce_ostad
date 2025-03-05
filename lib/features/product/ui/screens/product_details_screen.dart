@@ -12,10 +12,10 @@ import 'package:get/get.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({
-    super.key, required this.productDetailsModel,
+    super.key, required this.productId,
   });
 
-  final ProductDetailsModel productDetailsModel;
+  final int productId;
 
   static const String name = '/product/product-details';
 
@@ -27,7 +27,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<ProductDetailsController>().getProductDetails(widget.);
+    // Get.find<ProductDetailsController>().getProductDetails(widget.);
   }
   @override
   Widget build(BuildContext context) {

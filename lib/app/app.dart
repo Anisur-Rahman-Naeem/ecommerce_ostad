@@ -45,7 +45,7 @@ class CrafyBaby extends StatelessWidget {
           widget = ProductListScreen(categoryName: args['categoryName'], categoryId: args['categoryId'],);
         }else if (settings.name == ProductDetailsScreen.name) {
           int productId = settings.arguments as int;
-          widget = ProductDetailsScreen(productId: productId);
+          widget = ProductDetailsScreen(productId: 1,);
         }else if (settings.name == ReviewsListScreen.name) {
           int productId = settings.arguments as int;
           widget = ReviewsListScreen(productId: productId);
