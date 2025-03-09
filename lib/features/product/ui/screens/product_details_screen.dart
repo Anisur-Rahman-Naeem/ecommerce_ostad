@@ -15,7 +15,7 @@ class ProductDetailsScreen extends StatefulWidget {
     super.key, required this.productId,
   });
 
-  final int productId;
+  final String productId;
 
   static const String name = '/product/product-details';
 
@@ -27,7 +27,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    // Get.find<ProductDetailsController>().getProductDetails(widget.);
+    Get.find<ProductDetailsController>().getProductDetails(widget.productId);
   }
   @override
   Widget build(BuildContext context) {
@@ -40,69 +40,69 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           Navigator.pop(context);
         }, icon: const Icon(Icons.arrow_back_ios),),
       ),
-      // body: GetBuilder<ProductDetailsController>(
-      //   builder: (controller) {
-      //     if (controller.inProgress) {
-      //       return const CenteredCircularProgressIndicator();
-      //     }
-      //
-      //     if (controller.errorMessage != null) {
-      //       return Center(
-      //         child: Text(controller.errorMessage!),
-      //       );
-      //     }
-      //
-      //     // ProductDetails productDetails = controller.productDetails!;
-      //     // return Column(
-      //     //   children: [
-      //     //     Expanded(
-      //     //       child: SingleChildScrollView(
-      //     //         child: Column(
-      //     //           children: [
-      //     //             ProductImageCarousalSlider(imageUrls: [productDetails.img1!,productDetails.img2!,productDetails.img3!,productDetails.img4!],),
-      //     //             Padding(
-      //     //               padding: const EdgeInsets.all(16),
-      //     //               child: Column(
-      //     //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //     //                 children: [
-      //     //                   Row(
-      //     //                     crossAxisAlignment: CrossAxisAlignment.start,
-      //     //                     children: [
-      //     //                       productNameAndDetailsWidget(textTheme: textTheme, instance: productDetails),
-      //     //                       ProductQuantityIncDecButton(
-      //     //                         onChange: (int) {},
-      //     //                       ),
-      //     //                     ],
-      //     //                   ),
-      //     //                   ColorChoosePortion(textTheme, productDetails),
-      //     //                   sizeChoosePortion(textTheme, productDetails),
-      //     //                   const SizedBox(
-      //     //                     height: 16,
-      //     //                   ),
-      //     //                   Text(
-      //     //                     "Description",
-      //     //                     style: textTheme.titleMedium,
-      //     //                   ),
-      //     //                   const SizedBox(
-      //     //                     height: 8,
-      //     //                   ),
-      //     //                   Text(productDetails.des ?? '', style: const TextStyle(
-      //     //                     fontSize: 12,
-      //     //                     fontWeight: FontWeight.w400,
-      //     //                     color: Colors.grey
-      //     //                   ),)
-      //     //                 ],
-      //     //               ),
-      //     //             ),
-      //     //           ],
-      //     //         ),
-      //     //       ),
-      //     //     ),
-      //     //     _buildPriceAndAddToCartSection(textTheme, productDetails.product?.price ?? '0.0')
-      //     //   ],
-      //     // );
-      //   }
-      // ),
+      body: GetBuilder<ProductDetailsController>(
+        builder: (controller) {
+          if (controller.inProgress) {
+            return const CenteredCircularProgressIndicator();
+          }
+
+          if (controller.errorMessage != null) {
+            return Center(
+              child: Text(controller.errorMessage!),
+            );
+          }
+
+          ProductDetailsModel? productDetails = controller.productDetailsModel;
+          return Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ProductImageCarousalSlider(imageUrls: productDetails?.photos ?? [],),
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                productNameAndDetailsWidget(textTheme: textTheme, instance: productDetails ?? ProductDetailsModel()),
+                                ProductQuantityIncDecButton(
+                                  onChange: (int) {},
+                                ),
+                              ],
+                            ),
+                            ColorChoosePortion(textTheme, productDetails ?? ProductDetailsModel()),
+                            sizeChoosePortion(textTheme, productDetails ?? ProductDetailsModel()),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              "Description",
+                              style: textTheme.titleMedium,
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(productDetails?.description ?? '', style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.grey
+                            ),)
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              _buildPriceAndAddToCartSection(textTheme, productDetails?.currentPrice ?? 0)
+            ],
+          );
+        }
+      ),
     );
   }
 
@@ -120,10 +120,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         const SizedBox(
           height: 8,
         ),
-        // SizePickerWidget(
-        //   sizes: instance.size?.split(',') ?? [],
-        //   onSizeSelected: (String selectedSize) {},
-        // ),
+        SizePickerWidget(
+          sizes: instance.sizes ?? [],
+          onSizeSelected: (String selectedSize) {},
+        ),
       ],
     );
   }
@@ -142,17 +142,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         const SizedBox(
           height: 8,
         ),
-        // ColorsPickerWidget(
-        //   colors: instance.color?.split(',') ?? [],
-        //   onColorSelected: (String selectedColor) {},
-        // ),
+        ColorsPickerWidget(
+          colors: instance.colors?? [],
+          onColorSelected: (String selectedColor) {},
+        ),
       ],
     );
   }
 
-  Widget _buildPriceAndAddToCartSection(TextTheme textTheme, String price) {
+  Widget _buildPriceAndAddToCartSection(TextTheme textTheme, int price) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(color: AppColors.themeColor.withOpacity(0.15)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -178,7 +178,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             width: 120,
             child: ElevatedButton(
               onPressed: () {},
-              child: Text("Add to Cart"),
+              child: const Text("Add to Cart"),
             ),
           ),
         ],

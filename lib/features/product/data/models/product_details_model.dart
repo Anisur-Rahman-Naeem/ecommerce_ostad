@@ -4,14 +4,14 @@ class ProductDetailsModel {
   String? sId;
   String? title;
   Brand? brand;
-  List<CategoryItemModel>? categories;
+  List<CategoryItemModel>? categories = [];
   String? slug;
   String? metaDescription;
   String? description;
-  List<String>? photos;
-  List<String>? colors;
-  List<String>? sizes;
-  List<String>? tags;
+  List<String>? photos = [];
+  List<String>? colors = [];
+  List<String>? sizes = [];
+  List<String>? tags = [];
   int? regularPrice;
   int? currentPrice;
   int? quantity;
@@ -51,17 +51,17 @@ class ProductDetailsModel {
       });
     }
     slug = json['slug'];
-    metaDescription = json['meta_description'];
-    description = json['description'];
+    metaDescription = json['meta_description'] ?? '';
     photos = json['photos'].cast<String>();
-    colors = json['colors'] != null ? List<String>.from(json['colors']) : [];
-    sizes = json['sizes'] != null ? List<String>.from(json['sizes']) : [];
-    tags = json['tags'] != null ? List<String>.from(json['tags']) : [];
+    colors = json['colors'].cast<String>();
+    sizes = json['sizes'].cast<String>();
+    tags = json['tags'].cast<String>();
     regularPrice = json['regular_price'];
     currentPrice = json['current_price'];
     quantity = json['quantity'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
+    description = json['description'];
     inCart = json['in_cart'];
     inWishlist = json['in_wishlist'];
   }

@@ -44,8 +44,8 @@ class CrafyBaby extends StatelessWidget {
           Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
           widget = ProductListScreen(categoryName: args['categoryName'], categoryId: args['categoryId'],);
         }else if (settings.name == ProductDetailsScreen.name) {
-          int productId = settings.arguments as int;
-          widget = ProductDetailsScreen(productId: 1,);
+          String productId = settings.arguments as String;
+          widget = ProductDetailsScreen(productId: productId,);
         }else if (settings.name == ReviewsListScreen.name) {
           int productId = settings.arguments as int;
           widget = ReviewsListScreen(productId: productId);
