@@ -1,12 +1,15 @@
 import 'package:ecommerce_ostad/app/app_colors.dart';
+import 'package:ecommerce_ostad/features/common/ui/widgets/centered_circular_progress_indicator.dart';
+import 'package:ecommerce_ostad/features/product/review/ui/controllers/review_model_controller.dart';
 import 'package:ecommerce_ostad/features/product/review/ui/screens/writing_review_screen.dart';
 import 'package:ecommerce_ostad/features/product/review/ui/widgets/review_item_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ReviewsListScreen extends StatefulWidget {
   const ReviewsListScreen({super.key, required this.productId});
 
-  final int productId;
+  final String productId;
 
   static const String name = '/product/review_list';
 
@@ -15,6 +18,15 @@ class ReviewsListScreen extends StatefulWidget {
 }
 
 class _ReviewsListScreenState extends State<ReviewsListScreen> {
+  final ReviewModelController _reviewModelController =
+      Get.find<ReviewModelController>();
+
+  @override
+  void initState() {
+    _reviewModelController.getReviews(widget.productId);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -29,19 +41,26 @@ class _ReviewsListScreenState extends State<ReviewsListScreen> {
           icon: const Icon(Icons.arrow_back_ios),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return ReviewItemWidget();
-              },
+      body: GetBuilder<ReviewModelController>(builder: (controller) {
+        if (controller.inProgress) {
+          return const CenteredCircularProgressIndicator();
+        }
+        return Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: controller.reviews.length,
+                itemBuilder: (context, index) {
+                  return ReviewItemWidget(
+                    reviewModel: controller.reviews[index],
+                  );
+                },
+              ),
             ),
-          ),
-          reviewsBuilder(textTheme),
-        ],
-      ),
+            reviewsBuilder(textTheme),
+          ],
+        );
+      }),
     );
   }
 

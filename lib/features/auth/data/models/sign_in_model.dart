@@ -54,7 +54,7 @@ class User {
   bool? emailVerified;
   String? phone;
   bool? phoneVerified;
-  Null? avatarUrl;
+  String? avatarUrl;
   String? city;
   int? role;
 

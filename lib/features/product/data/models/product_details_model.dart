@@ -53,9 +53,11 @@ class ProductDetailsModel {
     slug = json['slug'];
     metaDescription = json['meta_description'] ?? '';
     photos = json['photos'].cast<String>();
-    colors = json['colors'].cast<String>();
-    sizes = json['sizes'].cast<String>();
-    tags = json['tags'].cast<String>();
+    colors = json['colors'] != null ? List<String>.from(json['colors']) : [];
+    sizes = json['sizes'] != null ? List<String>.from(json['sizes']) : [];
+    tags = json['tags'] != null ? List<String>.from(json['tags']) : [];
+
+
     regularPrice = json['regular_price'];
     currentPrice = json['current_price'];
     quantity = json['quantity'];

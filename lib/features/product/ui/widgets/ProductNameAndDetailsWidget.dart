@@ -46,7 +46,7 @@ class productNameAndDetailsWidget extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, ReviewsListScreen.name, arguments: 1);
+                  Navigator.pushNamed(context, ReviewsListScreen.name, arguments: instance.sId);
                 },
                 child: const Text("Reviews"),
               ),
