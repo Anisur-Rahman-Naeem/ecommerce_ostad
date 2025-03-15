@@ -81,7 +81,7 @@ class _ReviewsListScreenState extends State<ReviewsListScreen> {
                 width: 5,
               ),
               Text(
-                '(1000)',
+                '(${_reviewModelController.reviews.length})',
                 style: textTheme.titleSmall?.copyWith(fontSize: 17),
               ),
             ],
