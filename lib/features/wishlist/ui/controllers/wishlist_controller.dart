@@ -18,7 +18,7 @@ class WishListController extends GetxController {
 
   String? get errorMessage => _errorMessage;
 
-  Future<bool> getWishLists(String productId) async {
+  Future<bool> getWishLists() async {
     bool isSuccess = false;
     _inProgress = true;
     update();
