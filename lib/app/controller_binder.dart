@@ -1,8 +1,8 @@
 import 'package:ecommerce_ostad/features/auth/ui/controllers/sign_In_controller.dart';
 import 'package:ecommerce_ostad/features/auth/ui/controllers/otp_verification_controller.dart';
 import 'package:ecommerce_ostad/features/auth/ui/controllers/sign_up_controller.dart';
+import 'package:ecommerce_ostad/features/cart/ui/controllers/cart_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/auth_controller.dart';
-import 'package:ecommerce_ostad/features/common/ui/controller/cart_list_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/category_list_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/main_bottom_nav_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/product_list_controller.dart';
@@ -29,10 +29,10 @@ class ControllerBinder extends Bindings {
     Get.put(ProductDetailsController());
     Get.put(SignUpController());
     Get.put(SliderListController());
-    Get.put(CartListController());
     Get.put(ProductListByCategoryController());
     Get.put(ReviewModelController());
     Get.put(WishListController());
+    Get.put(CartListController());
   }
 
 }

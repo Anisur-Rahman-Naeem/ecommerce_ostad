@@ -1,10 +1,8 @@
 import 'package:ecommerce_ostad/app/app_colors.dart';
-import 'package:ecommerce_ostad/app/assets_path.dart';
+import 'package:ecommerce_ostad/features/cart/ui/controllers/cart_controller.dart';
 import 'package:ecommerce_ostad/features/cart/ui/widgets/cart_product_item_widget.dart';
-import 'package:ecommerce_ostad/features/common/ui/controller/cart_list_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/main_bottom_nav_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/centered_circular_progress_indicator.dart';
-import 'package:ecommerce_ostad/features/common/ui/widgets/product_quantity_inc_dec_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -48,9 +46,10 @@ class _CartListScreenState extends State<CartListScreen> {
               children: [
                 Expanded(
                   child: ListView.builder(
-                    itemCount: controller.cartList.length,
+                    itemCount: controller.cartListProducts.length,
                     itemBuilder: (context, index) {
-                      return CartProductItemWidget(cartModel: controller.cartList[index],);
+                      var cartItem = controller.cartListProducts[index];
+                      return CartProductItemWidget(cartItem: cartItem,);
                     },
                   ),
                 ),

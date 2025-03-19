@@ -1,7 +1,8 @@
-import 'package:ecommerce_ostad/features/cart/ui/model/cart_model.dart';
+
+import 'package:ecommerce_ostad/features/product/data/models/product_details_model.dart';
 
 class CartList {
-  List<CartModel>? results;
+  List<CartItem>? results;
   int? total;
   int? firstPage;
   int? previous;
@@ -18,9 +19,9 @@ class CartList {
 
   CartList.fromJson(Map<String, dynamic> json) {
     if (json['results'] != null) {
-      results = <CartModel>[];
+      results = <CartItem>[];
       json['results'].forEach((v) {
-        results!.add(CartModel.fromJson(v));
+        results!.add(CartItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -28,5 +29,41 @@ class CartList {
     previous = json['previous'];
     next = json['next'];
     lastPage = json['last_page'];
+  }
+}
+
+class CartItem {
+  String? sId;
+  ProductDetailsModel? product;
+  String? user;
+  int? quantity;
+  String? color;
+  String? size;
+  String? createdAt;
+  String? updatedAt;
+  int? iV;
+
+  CartItem(
+      {this.sId,
+        this.product,
+        this.user,
+        this.quantity,
+        this.color,
+        this.size,
+        this.createdAt,
+        this.updatedAt,
+        this.iV});
+
+  CartItem.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    product =
+    json['product'] != null ? ProductDetailsModel.fromJson(json['product']) : null;
+    user = json['user'];
+    quantity = json['quantity'];
+    color = json['color'];
+    size = json['size'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    iV = json['__v'];
   }
 }

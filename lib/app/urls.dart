@@ -8,7 +8,6 @@ class Urls {
   static String homeSliderUrl= "$_baseurl/slides";
   static String bannerListUrl= "$_baseurl/ListProductSlider";
   static String categoryListUrl= "$_baseurl/categories";
-  static String cartUrl= "$_baseurl/cart";
 
   static String productListByRemarkUrl(String remark) =>
       "$_baseurl/ListProductByRemark/$remark";
@@ -19,4 +18,5 @@ class Urls {
   static String reviewListUrl= "$_baseurl/reviews";
   static String productList = "$_baseurl/products";
   static String wishListsUrl = "$_baseurl/wishlist";
+  static String cartListsUrl = "$_baseurl/cart";
 }

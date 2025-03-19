@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:ecommerce_ostad/app/urls.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/auth_controller.dart';
 import 'package:ecommerce_ostad/features/product/data/models/product_details_data_receiver_model.dart';
@@ -32,14 +34,22 @@ class WishListController extends GetxController {
 
   String? _errorMessage;
 
-  AuthController authController = AuthController();
-
   String? get errorMessage => _errorMessage;
+
+  AuthController authController = AuthController();
+  bool verifyToken = false;
+
+  Future<bool> checkToken() async {
+    verifyToken = await authController.isTokenAvailable();
+    return verifyToken;
+  }
 
   Future<bool> getWishLists() async {
     bool isSuccess = false;
     _inProgress = true;
     update();
+
+
 
     final NetworkResponse response =
         await Get.find<NetworkCaller>().getRequest(Urls.wishListsUrl);

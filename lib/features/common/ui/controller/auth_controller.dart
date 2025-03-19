@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthController{
   String _accessTokenKey = 'access-token';
-  String _profileDataKey = 'access-token';
+  String _profileDataKey = 'profile-data';
 
   String? accessToken;
   User? profileModel;
@@ -28,12 +28,35 @@ class AuthController{
   Future<bool> isUserLoggedIn() async{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString(_accessTokenKey);
+    accessToken = token;
     if (token != null) {
       await getUserData();
       return true;
     }
     return false;
+
   }
+
+  Future<bool> isTokenAvailable() async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? token = sharedPreferences.getString(_accessTokenKey);
+    if (token != null) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<void> printToken() async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? token = sharedPreferences.getString(_accessTokenKey);
+    if(token == null) {
+      print("NO token found!");
+    } else {
+      print("THE JWT TOKEN IS    $token");
+    }
+  }
+
+
 
   Future<void> clearData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

@@ -4,6 +4,7 @@ import 'package:ecommerce_ostad/app/app_colors.dart';
 import 'package:ecommerce_ostad/app/app_constants.dart';
 import 'package:ecommerce_ostad/features/auth/ui/controllers/otp_verification_controller.dart';
 import 'package:ecommerce_ostad/features/auth/ui/widgets/app_icon_widget.dart';
+import 'package:ecommerce_ostad/features/common/ui/controller/auth_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/snack_bar_message.dart';
@@ -30,6 +31,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final RxBool _enableResendCodeButton = false.obs;
   final OTPVerficationController _otpVerficationController =
   Get.find<OTPVerficationController>();
+  AuthController _authController = AuthController();
 
   @override
   void initState() {
@@ -165,6 +167,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           widget.email, _otpTEController.text);
       if (response) {
         if (mounted) {
+          _authController.printToken();
           Navigator.pushNamedAndRemoveUntil(
               context, MainBottomNavScreen.name, (predicate) => false);
         }

@@ -1,6 +1,8 @@
 import 'package:ecommerce_ostad/features/auth/ui/widgets/app_icon_widget.dart';
+import 'package:ecommerce_ostad/features/common/ui/controller/auth_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,13 +14,15 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
+final AuthController _authController =Get.find<AuthController>();
 
 
   @override
   void initState() {
     super.initState();
+    _authController.isUserLoggedIn();
     _moveToNextScreen();
+    _authController.printToken();
   }
 
   Future<void> _moveToNextScreen() async {
