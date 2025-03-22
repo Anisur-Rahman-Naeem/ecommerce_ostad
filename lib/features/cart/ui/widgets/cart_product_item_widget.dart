@@ -8,7 +8,7 @@ class CartProductItemWidget extends StatelessWidget {
   const CartProductItemWidget({
     super.key, required this.cartItem,
   });
-  final CartItem cartItem;
+  final CartItem? cartItem;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class CartProductItemWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 14),
         child: Row(
           children: [
-            Image.network(
+            Image.asset(
               AssetsPath.dummyImage,
               width: 90,
               height: 90,
@@ -34,9 +34,10 @@ class CartProductItemWidget extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              cartItem.product?.title ?? "",
+                              cartItem?.product?.title ?? "",
                               maxLines: 1,
                               style: textTheme.bodyLarge
                                   ?.copyWith(
@@ -45,9 +46,9 @@ class CartProductItemWidget extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                Text("Color: ${cartItem.color ?? "N/A"}"),
+                                Text("Color: ${cartItem?.color ?? "N/A"}"),
                                 const SizedBox(width: 8),
-                                Text("Size: ${cartItem.size ?? "N/A"}")
+                                Text("Size: ${cartItem?.size ?? "N/A"}")
                               ],
                             )
                           ],
@@ -64,7 +65,7 @@ class CartProductItemWidget extends StatelessWidget {
                     mainAxisAlignment:
                     MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('${cartItem.product?.currentPrice ?? "N/A"}', style: const TextStyle(
+                      Text('\$${cartItem?.product?.currentPrice ?? "N/A"}', style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                           color: AppColors.themeColor

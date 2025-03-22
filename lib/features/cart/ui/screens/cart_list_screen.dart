@@ -1,8 +1,11 @@
 import 'package:ecommerce_ostad/app/app_colors.dart';
+import 'package:ecommerce_ostad/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:ecommerce_ostad/features/cart/ui/controllers/cart_controller.dart';
 import 'package:ecommerce_ostad/features/cart/ui/widgets/cart_product_item_widget.dart';
+import 'package:ecommerce_ostad/features/common/ui/controller/auth_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/main_bottom_nav_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/centered_circular_progress_indicator.dart';
+import 'package:ecommerce_ostad/features/common/ui/widgets/snack_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,49 +17,67 @@ class CartListScreen extends StatefulWidget {
 }
 
 class _CartListScreenState extends State<CartListScreen> {
-  CartListController cartListController = Get.find<CartListController>();
+
+  final AuthController _authController = Get.find<AuthController>();
+  CartListController _cartListController = Get.find<CartListController>();
   @override
   void initState() {
-    cartListController.getCartList();
+    _checkTokenAndFetchWishlist();
     super.initState();
+  }
+
+
+  Future<void> _checkTokenAndFetchWishlist() async {
+    bool hastoken = await _authController.isTokenAvailable();
+    if (hastoken) {
+      _cartListController.getCartList();
+    } else {
+      showSnackBarMessage(context, "Token not found!", true);
+      Navigator.pushNamed(context, SignUpScreen.name);
+    }
   }
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
 
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: (_, __) {
-        _onPop();
+    return RefreshIndicator(
+      onRefresh: () async{
+        _checkTokenAndFetchWishlist();
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Cart"),
-          leading: IconButton(
-            onPressed: _onPop,
-            icon: const Icon(Icons.arrow_back_ios),
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (_, __) {
+          _onPop();
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text("Cart"),
+            leading: IconButton(
+              onPressed: _onPop,
+              icon: const Icon(Icons.arrow_back_ios),
+            ),
           ),
-        ),
-        body: GetBuilder<CartListController>(
-          builder: (controller) {
-            if(controller.inProgress){
-              return const CenteredCircularProgressIndicator();
-            }
-            return Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: controller.cartListProducts.length,
-                    itemBuilder: (context, index) {
-                      var cartItem = controller.cartListProducts[index];
-                      return CartProductItemWidget(cartItem: cartItem,);
-                    },
+          body: GetBuilder<CartListController>(
+            builder: (controller) {
+              if(controller.inProgress){
+                return const CenteredCircularProgressIndicator();
+              }
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: controller.cartItemList.length,
+                      itemBuilder: (context, index) {
+                        var cartItem = controller.cartItemList[index];
+                        return CartProductItemWidget(cartItem: cartItem,);
+                      },
+                    ),
                   ),
-                ),
-                _buildPriceAndCheckoutSection(textTheme)
-              ],
-            );
-          }
+                  _buildPriceAndCheckoutSection(textTheme)
+                ],
+              );
+            }
+          ),
         ),
       ),
     );
@@ -79,9 +100,9 @@ class _CartListScreenState extends State<CartListScreen> {
                 'Total Price',
                 style: textTheme.titleSmall,
               ),
-              const Text(
-                '\$100039',
-                style: TextStyle(
+              Text(
+                "\$${_cartListController.getTotalCartPrice()}",
+                style: const TextStyle(
                   color: AppColors.themeColor,
                   fontWeight: FontWeight.w600,
                   fontSize: 20,

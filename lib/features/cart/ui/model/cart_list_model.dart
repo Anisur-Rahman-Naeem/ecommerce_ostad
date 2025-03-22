@@ -37,8 +37,8 @@ class CartItem {
   ProductDetailsModel? product;
   String? user;
   int? quantity;
-  String? color;
-  String? size;
+  List<String>? color;
+  List<String>? size;
   String? createdAt;
   String? updatedAt;
   int? iV;
@@ -56,8 +56,7 @@ class CartItem {
 
   CartItem.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    product =
-    json['product'] != null ? ProductDetailsModel.fromJson(json['product']) : null;
+    product = json['product'] != null ? ProductDetailsModel.fromJson(json['product']) : null;
     user = json['user'];
     quantity = json['quantity'];
     color = json['color'];
