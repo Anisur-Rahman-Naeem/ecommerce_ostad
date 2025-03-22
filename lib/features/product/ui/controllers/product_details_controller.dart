@@ -33,4 +33,17 @@ class ProductDetailsController extends GetxController {
     update();
     return isSuccess;
   }
+
+
+  Future<ProductDetailsDataReceiverModel?> fetchingProductDetails(String productId) async {
+    final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(Urls.productDetailsUrl(productId));
+
+    if (response.isSuccess) {
+      return ProductDetailsDataReceiverModel.fromJson(response.responseData);
+    } else {
+      print("Error fetching product details for ID: $productId");
+      return null;
+    }
+  }
+
 }

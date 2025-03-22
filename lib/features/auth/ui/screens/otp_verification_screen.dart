@@ -31,7 +31,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final RxBool _enableResendCodeButton = false.obs;
   final OTPVerficationController _otpVerficationController =
   Get.find<OTPVerficationController>();
-  AuthController _authController = AuthController();
+  final AuthController _authController = Get.find<AuthController>();
 
   @override
   void initState() {

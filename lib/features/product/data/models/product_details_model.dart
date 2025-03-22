@@ -43,13 +43,10 @@ class ProductDetailsModel {
   ProductDetailsModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     title = json['title'];
-    brand = json['brand'] != null ? Brand.fromJson(json['brand']) : null;
-    if (json['categories'] != null) {
-      categories = <CategoryItemModel>[];
-      json['categories'].forEach((v) {
-        categories!.add(CategoryItemModel.fromJson(v));
-      });
-    }
+    brand = json['brand'] is String ? Brand(sId: json['brand']) : (json['brand'] != null ? Brand.fromJson(json['brand']) : null);
+    categories = json['categories'] != null
+        ? json['categories'].map<CategoryItemModel>((v) => CategoryItemModel(sId: v.toString())).toList()
+        : [];
     slug = json['slug'];
     metaDescription = json['meta_description'] ?? '';
     photos = json['photos'].cast<String>();

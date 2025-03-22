@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:ecommerce_ostad/features/common/data/models/error_response_model.dart';
-import 'package:http/http.dart';
+import 'package:ecommerce_ostad/features/common/ui/controller/auth_controller.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 class NetworkResponse {
@@ -21,13 +23,15 @@ class NetworkResponse {
 class NetworkCaller {
   final Logger _logger = Logger();
 
-  Future<NetworkResponse> getRequest(String url, {Map<String, dynamic>? queryParams,String? productId, String? accessToken}) async {
+  AuthController authController = Get.find<AuthController>();
+
+  Future<NetworkResponse> getRequest(String url, {Map<String, dynamic>? queryParams,String? productId}) async {
     try {
       Map<String, String> headers = {
         'content-type': 'application/json',
       };
-      if (accessToken != null) {
-        headers['token'] = accessToken;
+      if (authController.accessToken != null) {
+        headers['token'] = authController.accessToken!;
       }
       if(queryParams != null){
         url += '?';
@@ -39,7 +43,7 @@ class NetworkCaller {
       }
       Uri uri = Uri.parse(url);
       _logRequest(url);
-      Response response = await get(uri, headers: headers);
+      http.Response response = await http.get(uri, headers: headers);
       _logResponse(url, response.statusCode, response.headers, response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         final decodedMessage = jsonDecode(response.body);
@@ -71,8 +75,8 @@ class NetworkCaller {
         'content-type': 'application/json',
       };
       _logRequest(url, headers, body);
-      Response response =
-          await post(uri, headers: headers, body: jsonEncode(body));
+      http.Response response =
+          await http.post(uri, headers: headers, body: jsonEncode(body));
       _logResponse(url, response.statusCode, response.headers, response.body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         final decodedMessage = jsonDecode(response.body);

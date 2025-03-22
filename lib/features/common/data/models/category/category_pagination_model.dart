@@ -67,6 +67,7 @@ class CategoryItemModel {
         this.updatedAt,
         this.iV});
 
+
   CategoryItemModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     title = json['title'];

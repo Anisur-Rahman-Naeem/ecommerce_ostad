@@ -22,7 +22,7 @@ class ControllerBinder extends Bindings {
     Get.put(NetworkCaller());
     Get.put(SignInController());
     Get.put(OTPVerficationController());
-    Get.put(AuthController());
+    Get.put<AuthController>(AuthController(), permanent: true);
     Get.put(CategoryListController());
     Get.put(PopularProductListController());
     Get.put(ProductListController());

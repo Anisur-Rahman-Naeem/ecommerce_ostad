@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:ecommerce_ostad/app/urls.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/auth_controller.dart';
@@ -65,7 +64,11 @@ class WishListController extends GetxController {
           [];
 
       _wishListProducts = await Future.wait(productIds.map((productId) async {
-        await _productDetailsController.getProductDetails(productId);
+        ProductDetailsDataReceiverModel? product = await _productDetailsController.fetchingProductDetails(productId);
+        if(product == null) {
+          print("Skipping productId: $productId, data not found");
+        }
+        return product;
       }));
 
       isSuccess = true;

@@ -5,6 +5,7 @@ import 'package:ecommerce_ostad/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:ecommerce_ostad/features/auth/ui/screens/otp_verification_screen.dart';
 import 'package:ecommerce_ostad/features/auth/ui/screens/splash_screen.dart';
 import 'package:ecommerce_ostad/features/category/ui/screens/category_list_screen.dart';
+import 'package:ecommerce_ostad/features/common/ui/controller/auth_controller.dart';
 import 'package:ecommerce_ostad/features/product/review/ui/screens/reviews_list_screen.dart';
 import 'package:ecommerce_ostad/features/product/review/ui/screens/writing_review_screen.dart';
 import 'package:ecommerce_ostad/features/product/ui/screens/product_details_screen.dart';
@@ -19,6 +20,7 @@ class CrafyBaby extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put<AuthController>(AuthController(), permanent: true);
     return GetMaterialApp(
       initialRoute: '/',
       theme: AppThemeData.lightThemeData,

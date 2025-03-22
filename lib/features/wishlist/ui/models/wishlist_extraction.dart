@@ -50,8 +50,7 @@ class WishList {
 
   WishList.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    product =
-    json['product'] != null ? ProductDetailsModel.fromJson(json['product']) : null;
+    product = json['product'] != null ? ProductDetailsModel.fromJson(json['product']) : null;
     user = json['user'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];

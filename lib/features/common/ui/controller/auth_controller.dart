@@ -17,6 +17,9 @@ class AuthController{
     await sharedPreferences.setString(_accessTokenKey, accessToken);
     await sharedPreferences.setString(_profileDataKey, jsonEncode(userModel.toJson()));
     profileModel = userModel;
+
+    this.accessToken = accessToken;
+    profileModel = userModel;
   }
 
   Future<void> getUserData() async {
