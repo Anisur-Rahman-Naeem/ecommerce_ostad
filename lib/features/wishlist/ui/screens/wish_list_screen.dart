@@ -17,7 +17,7 @@ class WishListScreen extends StatefulWidget {
 
 class _WishListScreenState extends State<WishListScreen> {
 
-  final AuthController _authController = AuthController();
+  final AuthController _authController = Get.find<AuthController>();
   final WishListController _wishListController = Get.find<WishListController>();
   @override
   void initState() {

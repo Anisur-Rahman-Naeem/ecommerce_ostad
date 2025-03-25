@@ -1,5 +1,8 @@
 import 'package:ecommerce_ostad/app/app_colors.dart';
+import 'package:ecommerce_ostad/features/auth/ui/screens/sign_in_screen.dart';
+import 'package:ecommerce_ostad/features/common/ui/controller/auth_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/centered_circular_progress_indicator.dart';
+import 'package:ecommerce_ostad/features/common/ui/widgets/snack_bar_message.dart';
 import 'package:ecommerce_ostad/features/product/review/ui/controllers/review_model_controller.dart';
 import 'package:ecommerce_ostad/features/product/review/ui/screens/writing_review_screen.dart';
 import 'package:ecommerce_ostad/features/product/review/ui/widgets/review_item_widget.dart';
@@ -20,12 +23,14 @@ class ReviewsListScreen extends StatefulWidget {
 class _ReviewsListScreenState extends State<ReviewsListScreen> {
   final ReviewModelController _reviewModelController =
       Get.find<ReviewModelController>();
+  final AuthController _authController = Get.find<AuthController>();
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_){
     _reviewModelController.getReviews(widget.productId);
     super.initState();
-  }
+  });}
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +94,16 @@ class _ReviewsListScreenState extends State<ReviewsListScreen> {
           SizedBox(
             width: 70,
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, WritingReviewScreen.name, arguments: widget.productId);
+              onPressed: () async{
+                bool hastoken = await _authController.isTokenAvailable();
+
+                if(hastoken) {
+                  Navigator.pushNamed(context, WritingReviewScreen.name,
+                      arguments: widget.productId);
+                } else{
+                  showSnackBarMessage(context, 'Token not found!');
+                  Navigator.pushNamed(context, SignInScreen.name);
+                }
               },
               style: ElevatedButton.styleFrom(
                 shape: const CircleBorder(),

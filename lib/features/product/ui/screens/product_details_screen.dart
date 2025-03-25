@@ -27,7 +27,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){;
     Get.find<ProductDetailsController>().getProductDetails(widget.productId);
+    });
   }
   @override
   Widget build(BuildContext context) {
