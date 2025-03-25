@@ -16,6 +16,7 @@ class Urls {
   static String productDetailsUrl(String productId) =>
       "$_baseurl/products/id/$productId";
   static String reviewListUrl= "$_baseurl/reviews";
+  static String writingReviewUrl= "$_baseurl/review";
   static String productList = "$_baseurl/products";
   static String wishListsUrl = "$_baseurl/wishlist";
   static String cartListsUrl = "$_baseurl/cart";

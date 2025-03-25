@@ -74,6 +74,9 @@ class NetworkCaller {
       Map<String, String> headers = {
         'content-type': 'application/json',
       };
+      if (authController.accessToken != null) {
+        headers['token'] = authController.accessToken!;
+      }
       _logRequest(url, headers, body);
       http.Response response =
           await http.post(uri, headers: headers, body: jsonEncode(body));

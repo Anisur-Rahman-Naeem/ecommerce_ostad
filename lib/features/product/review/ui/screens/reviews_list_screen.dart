@@ -90,7 +90,7 @@ class _ReviewsListScreenState extends State<ReviewsListScreen> {
             width: 70,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, WritingReviewScreen.name);
+                Navigator.pushNamed(context, WritingReviewScreen.name, arguments: widget.productId);
               },
               style: ElevatedButton.styleFrom(
                 shape: const CircleBorder(),

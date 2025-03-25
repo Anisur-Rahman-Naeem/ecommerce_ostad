@@ -10,6 +10,7 @@ import 'package:ecommerce_ostad/features/home/ui/controllers/popular_product_lis
 import 'package:ecommerce_ostad/features/home/ui/controllers/product_list_by_category_controller.dart';
 import 'package:ecommerce_ostad/features/home/ui/controllers/slider_list_controller.dart';
 import 'package:ecommerce_ostad/features/product/review/ui/controllers/review_model_controller.dart';
+import 'package:ecommerce_ostad/features/product/review/ui/controllers/writing_review_controller.dart';
 import 'package:ecommerce_ostad/features/product/ui/controllers/product_details_controller.dart';
 import 'package:ecommerce_ostad/features/wishlist/ui/controllers/wishlist_controller.dart';
 import 'package:ecommerce_ostad/services/network%20caller/network_caller.dart';
@@ -33,6 +34,7 @@ class ControllerBinder extends Bindings {
     Get.put(ReviewModelController());
     Get.put(WishListController());
     Get.put(CartListController());
+    Get.put(WritingReviewController());
   }
 
 }

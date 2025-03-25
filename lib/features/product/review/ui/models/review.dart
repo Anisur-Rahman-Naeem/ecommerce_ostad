@@ -5,7 +5,7 @@ class Review {
   String? sId;
   ProductDetailsModel? product;
   User? user;
-  int? rating;
+  double? rating;
   String? comment;
   String? createdAt;
   String? updatedAt;
@@ -25,7 +25,7 @@ class Review {
     sId = json['_id'];
     product = json['product'] != null ? ProductDetailsModel.fromJson(json['product']) : null;
     user = json['user'] != null ? User.fromJson(json['user']) : null;
-    rating = json['rating'];
+    rating = json['rating']?.toDouble();
     comment = json['comment'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
