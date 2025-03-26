@@ -22,4 +22,6 @@ class Urls {
   static String productList = "$_baseurl/products";
   static String wishListsUrl = "$_baseurl/wishlist";
   static String cartListsUrl = "$_baseurl/cart";
+  static String userProfileUrl = "$_baseurl/auth/profile";
+  static String cartCheckoutUrl = "$_baseurl/order";
 }

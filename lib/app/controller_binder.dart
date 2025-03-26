@@ -2,6 +2,7 @@ import 'package:ecommerce_ostad/features/auth/ui/controllers/sign_In_controller.
 import 'package:ecommerce_ostad/features/auth/ui/controllers/otp_verification_controller.dart';
 import 'package:ecommerce_ostad/features/auth/ui/controllers/sign_up_controller.dart';
 import 'package:ecommerce_ostad/features/cart/ui/controllers/add_to_cart_controller.dart';
+import 'package:ecommerce_ostad/features/cart/ui/controllers/cart_checkout_controller.dart';
 import 'package:ecommerce_ostad/features/cart/ui/controllers/cart_controller.dart';
 import 'package:ecommerce_ostad/features/cart/ui/controllers/delete_item_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/auth_controller.dart';
@@ -16,6 +17,7 @@ import 'package:ecommerce_ostad/features/product/review/ui/controllers/writing_r
 import 'package:ecommerce_ostad/features/product/ui/controllers/product_details_controller.dart';
 import 'package:ecommerce_ostad/features/wishlist/ui/controllers/wishlist_controller.dart';
 import 'package:ecommerce_ostad/services/network%20caller/network_caller.dart';
+import 'package:ecommerce_ostad/user/controller/user_model_controller.dart';
 import 'package:get/get.dart';
 
 class ControllerBinder extends Bindings {
@@ -39,6 +41,8 @@ class ControllerBinder extends Bindings {
     Get.put(WritingReviewController());
     Get.put(AddToCartController());
     Get.put(DeleteItemController());
+    Get.put(UserModelController());
+    Get.put(CartCheckoutController());
   }
 
 }
