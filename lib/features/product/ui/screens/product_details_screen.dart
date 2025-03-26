@@ -1,6 +1,10 @@
 import 'package:ecommerce_ostad/app/app_colors.dart';
+import 'package:ecommerce_ostad/features/auth/ui/screens/sign_in_screen.dart';
+import 'package:ecommerce_ostad/features/cart/ui/controllers/add_to_cart_controller.dart';
+import 'package:ecommerce_ostad/features/common/ui/controller/auth_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/product_quantity_inc_dec_button.dart';
+import 'package:ecommerce_ostad/features/common/ui/widgets/snack_bar_message.dart';
 import 'package:ecommerce_ostad/features/product/data/models/product_details_model.dart';
 import 'package:ecommerce_ostad/features/product/ui/controllers/product_details_controller.dart';
 import 'package:ecommerce_ostad/features/product/ui/widgets/ProductNameAndDetailsWidget.dart';
@@ -24,6 +28,8 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  final AddToCartController _addToCartController = Get.find<AddToCartController>();
+  final AuthController _authController = Get.find<AuthController>();
   @override
   void initState() {
     super.initState();
@@ -178,9 +184,30 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           ),
           SizedBox(
             width: 120,
-            child: ElevatedButton(
-              onPressed: () {},
-              child: const Text("Add to Cart"),
+            child: GetBuilder<AddToCartController>(
+              builder: (controller) {
+                return Visibility(
+                  visible: !controller.inProgress,
+                  replacement: const CenteredCircularProgressIndicator(),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      bool hastoken = await _authController.isTokenAvailable();
+
+                      if (hastoken) {
+                        bool result = await _addToCartController.addingToCart(widget.productId);
+                        if(result) {
+                          showSnackBarMessage(context, 'Successfully Added To Cart!');
+                        } else {
+                          showSnackBarMessage(context, _addToCartController.errorMessage!, true);
+                        }
+                      } else {
+                        Navigator.pushNamed(context, SignInScreen.name);
+                      }
+                    },
+                    child: const Text("Add to Cart"),
+                  ),
+                );
+              }
             ),
           ),
         ],

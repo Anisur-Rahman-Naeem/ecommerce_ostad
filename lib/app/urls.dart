@@ -15,6 +15,8 @@ class Urls {
       "$_baseurl/products?category=$categoryId";
   static String productDetailsUrl(String productId) =>
       "$_baseurl/products/id/$productId";
+  static String deleteItemUrl(String itemId) =>
+      "$_baseurl/cart/$itemId";
   static String reviewListUrl= "$_baseurl/reviews";
   static String writingReviewUrl= "$_baseurl/review";
   static String productList = "$_baseurl/products";

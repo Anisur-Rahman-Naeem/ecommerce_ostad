@@ -1,6 +1,7 @@
 import 'package:ecommerce_ostad/app/app_colors.dart';
 import 'package:ecommerce_ostad/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:ecommerce_ostad/features/cart/ui/controllers/cart_controller.dart';
+import 'package:ecommerce_ostad/features/cart/ui/controllers/delete_item_controller.dart';
 import 'package:ecommerce_ostad/features/cart/ui/widgets/cart_product_item_widget.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/auth_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/main_bottom_nav_controller.dart';
@@ -62,19 +63,23 @@ class _CartListScreenState extends State<CartListScreen> {
               if(controller.inProgress){
                 return const CenteredCircularProgressIndicator();
               }
-              return Column(
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: controller.cartItemList.length,
-                      itemBuilder: (context, index) {
-                        var cartItem = controller.cartItemList[index];
-                        return CartProductItemWidget(cartItem: cartItem,);
-                      },
-                    ),
-                  ),
-                  _buildPriceAndCheckoutSection(textTheme)
-                ],
+              return GetBuilder<DeleteItemController>(
+                builder: (delcontroller) {
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: controller.cartItemList.length,
+                          itemBuilder: (context, index) {
+                            var cartItem = controller.cartItemList[index];
+                            return CartProductItemWidget(cartItem: cartItem,);
+                          },
+                        ),
+                      ),
+                      _buildPriceAndCheckoutSection(textTheme)
+                    ],
+                  );
+                }
               );
             }
           ),

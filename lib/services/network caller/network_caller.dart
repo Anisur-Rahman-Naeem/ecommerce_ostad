@@ -67,6 +67,48 @@ class NetworkCaller {
     }
   }
 
+  Future<NetworkResponse> deleteRequest(String url, {Map<String, dynamic>? queryParams,String? productId}) async {
+    try {
+      Map<String, String> headers = {
+        'content-type': 'application/json',
+      };
+      if (authController.accessToken != null) {
+        headers['token'] = authController.accessToken!;
+      }
+      if(queryParams != null){
+        url += '?';
+        for(String param in queryParams.keys) {
+          url += '$param=${queryParams[param]}&';
+      }}
+      if(productId != null) {
+        url += '/$productId';
+      }
+      Uri uri = Uri.parse(url);
+      _logRequest(url);
+      http.Response response = await http.delete(uri, headers: headers);
+      _logResponse(url, response.statusCode, response.headers, response.body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final decodedMessage = jsonDecode(response.body);
+        return NetworkResponse(
+            isSuccess: true,
+            statusCode: response.statusCode,
+            responseData: decodedMessage);
+      } else {
+        return NetworkResponse(
+          isSuccess: false,
+          statusCode: response.statusCode,
+        );
+      }
+    } catch (e) {
+      _logResponse(url, -1, null, '', e.toString());
+      return NetworkResponse(
+        isSuccess: false,
+        statusCode: -1,
+        errorMessage: e.toString(),
+      );
+    }
+  }
+
   Future<NetworkResponse> postRequest(String url,
       {Map<String, dynamic>? body}) async {
     try {

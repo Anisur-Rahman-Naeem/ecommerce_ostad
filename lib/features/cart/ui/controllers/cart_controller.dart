@@ -17,16 +17,6 @@ class CartListController extends GetxController {
   final ProductDetailsController _productDetailsController =
       ProductDetailsController();
 
-  // List<ProductDetailsDataReceiverModel?> _cartListProducts = [];
-  //
-  // List<ProductDetailsModel> get cartListProducts {
-  //   return _cartListProducts
-  //       .map((receiver) => receiver?.data!)
-  //       .where((details) => details != null)
-  //       .cast<ProductDetailsModel>()
-  //       .toList();
-  // }
-
   final List<CartItem?> _cartItemProducts = [];
 
   RxDouble total = 0.0.obs;
@@ -59,21 +49,6 @@ class CartListController extends GetxController {
     if (response.isSuccess) {
       CartModel cartModel =
           CartModel.fromJson(response.responseData);
-      // List<String> productIds = cartModel.data?.results
-      //         ?.map((item) {
-      //           return item.product?.sId ?? "";
-      //         })
-      //         .where((id) => id.isNotEmpty)
-      //         .toList() ??
-      //     [];
-
-      // _cartListProducts = await Future.wait(productIds.map((productId) async {
-      //   ProductDetailsDataReceiverModel? product = await _productDetailsController.fetchingProductDetails(productId);
-      //   if(product == null) {
-      //     print("Skipping productId: $productId, data not found");
-      //   }
-      //   return product;
-      // }));
       if (cartModel.data?.results != null) {
         //clearing previous items and gettng new one
         _cartItemProducts.clear();
