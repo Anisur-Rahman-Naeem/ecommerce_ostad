@@ -33,7 +33,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){;
+    WidgetsBinding.instance.addPostFrameCallback((_){
     Get.find<ProductDetailsController>().getProductDetails(widget.productId);
     });
   }
@@ -78,11 +78,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               children: [
                                 productNameAndDetailsWidget(textTheme: textTheme, instance: productDetails ?? ProductDetailsModel()),
                                 ProductQuantityIncDecButton(
-                                  onChange: (int) {},
+                                  onChange: (_) {},
                                 ),
                               ],
                             ),
-                            ColorChoosePortion(textTheme, productDetails ?? ProductDetailsModel()),
+                            colorChoosePortion(textTheme, productDetails ?? ProductDetailsModel()),
                             sizeChoosePortion(textTheme, productDetails ?? ProductDetailsModel()),
                             const SizedBox(
                               height: 16,
@@ -136,7 +136,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Widget ColorChoosePortion(TextTheme textTheme, ProductDetailsModel instance) {
+  Widget colorChoosePortion(TextTheme textTheme, ProductDetailsModel instance) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -195,14 +195,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
                       if (hastoken) {
                         bool result = await _addToCartController.addingToCart(widget.productId);
+                        if(mounted){
                         if(result) {
-                          showSnackBarMessage(context, 'Successfully Added To Cart!');
+                          showSnackBarMessage(context, 'Successfully Added To Cart!',);
                         } else {
                           showSnackBarMessage(context, _addToCartController.errorMessage!, true);
                         }
-                      } else {
+                      }} else {
+                        if (mounted){
                         Navigator.pushNamed(context, SignInScreen.name);
-                      }
+                      }}
                     },
                     child: const Text("Add to Cart"),
                   ),

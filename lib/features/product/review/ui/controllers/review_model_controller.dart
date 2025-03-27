@@ -30,7 +30,11 @@ class ReviewModelController extends GetxController {
     await Get.find<NetworkCaller>().getRequest(Urls.reviewListUrl, queryParams: queryParams);
     if (response.isSuccess) {
       ReviewModel reviewModel = ReviewModel.fromJson(response.responseData);
-      _reviewList.addAll(reviewModel.data?.reviews ?? []);
+      if(reviewModel.data!.reviews != null) {
+        _reviewList.clear();
+        _reviewList.addAll(reviewModel.data?.reviews ?? []);
+        print('THE LENGTH IS : ${reviewModel.data?.reviews?.length}');
+      }
       isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;

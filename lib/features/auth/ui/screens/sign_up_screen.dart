@@ -169,18 +169,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
             },
           ),
           const SizedBox(height: 8),
-          TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: _passwordTEController,
-            decoration: const InputDecoration(
-              hintText: 'Password',
-            ),
-            validator: (String? value) {
-              if ((value?.trim().isEmpty ?? true) || value!.length < 6) {
-                return 'Enter a password more than 6 letters';
+          GetBuilder<SignUpController>(
+              builder: (controller) {
+                return TextFormField(
+                  obscureText: controller.show,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: _passwordTEController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(hintText: "Password",suffixIcon: TextButton(onPressed: (){
+                    controller.onTapped();
+                  }, child: Text(controller.show ?"Show" : "Hide", style: const TextStyle(color: Colors.grey),))),
+                  validator: (String? value) {
+                    if ((value?.trim().isEmpty ?? true) || value!.length < 6){
+                      return "Enter your password";
+                    }
+                    return null;
+                  },
+                );
               }
-              return null;
-            },
           ),
           const SizedBox(height: 8),
         ],

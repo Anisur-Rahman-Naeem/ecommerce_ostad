@@ -1,4 +1,5 @@
 import 'package:ecommerce_ostad/app/app_colors.dart';
+import 'package:ecommerce_ostad/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:ecommerce_ostad/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:ecommerce_ostad/features/cart/ui/controllers/cart_checkout_controller.dart';
 import 'package:ecommerce_ostad/features/cart/ui/controllers/cart_controller.dart';
@@ -38,7 +39,7 @@ class _CartListScreenState extends State<CartListScreen> {
       _cartListController.getCartList();
     } else {
       showSnackBarMessage(context, "Token not found!", true);
-      Navigator.pushNamed(context, SignUpScreen.name);
+      Navigator.pushNamed(context, SignInScreen.name);
     }
   }
   @override
@@ -139,7 +140,6 @@ class _CartListScreenState extends State<CartListScreen> {
       ),
     );
   }
-
   void _showOrderSuccessDialog(BuildContext context) {
     showDialog(context: context,
         barrierDismissible: false,

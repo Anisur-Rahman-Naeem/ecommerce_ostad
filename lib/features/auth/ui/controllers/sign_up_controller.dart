@@ -10,6 +10,13 @@ class SignUpController extends GetxController {
 
   String? _errorMessage;
 
+  bool show = true;
+
+  void onTapped(){
+    show = !show;
+    update();
+  }
+
   String? get errorMessage => _errorMessage;
 
   Future<bool> signUp(SignUpParams params) async {

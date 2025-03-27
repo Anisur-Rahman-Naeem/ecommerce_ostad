@@ -27,9 +27,9 @@ class _ReviewsListScreenState extends State<ReviewsListScreen> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_){
-    _reviewModelController.getReviews(widget.productId);
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    await _reviewModelController.getReviews(widget.productId);
   });}
 
   @override
@@ -50,20 +50,25 @@ class _ReviewsListScreenState extends State<ReviewsListScreen> {
         if (controller.inProgress) {
           return const CenteredCircularProgressIndicator();
         }
-        return Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: controller.reviews.length,
-                itemBuilder: (context, index) {
-                  return ReviewItemWidget(
-                    reviewModel: controller.reviews[index],
-                  );
-                },
+        return RefreshIndicator(
+          onRefresh: () async {
+            await _reviewModelController.getReviews(widget.productId);
+          },
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: controller.reviews.length,
+                  itemBuilder: (context, index) {
+                    return ReviewItemWidget(
+                      reviewModel: controller.reviews[index],
+                    );
+                  },
+                ),
               ),
-            ),
-            reviewsBuilder(textTheme),
-          ],
+              reviewsBuilder(textTheme),
+            ],
+          ),
         );
       }),
     );
@@ -85,9 +90,13 @@ class _ReviewsListScreenState extends State<ReviewsListScreen> {
               const SizedBox(
                 width: 5,
               ),
-              Text(
-                '(${_reviewModelController.reviews.length})',
-                style: textTheme.titleSmall?.copyWith(fontSize: 17),
+              GetBuilder<ReviewModelController>(
+                builder: (controller) {
+                  return Text(
+                    '(${controller.reviews.length})',
+                    style: textTheme.titleSmall?.copyWith(fontSize: 17),
+                  );
+                }
               ),
             ],
           ),
@@ -101,7 +110,7 @@ class _ReviewsListScreenState extends State<ReviewsListScreen> {
                   Navigator.pushNamed(context, WritingReviewScreen.name,
                       arguments: widget.productId);
                 } else{
-                  showSnackBarMessage(context, 'Token not found!');
+                  showSnackBarMessage(context, 'Token not found!',true);
                   Navigator.pushNamed(context, SignInScreen.name);
                 }
               },

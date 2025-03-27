@@ -1,3 +1,4 @@
+import 'package:ecommerce_ostad/features/auth/ui/screens/sign_in_screen.dart';
 import 'package:ecommerce_ostad/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/auth_controller.dart';
 import 'package:ecommerce_ostad/features/common/ui/controller/main_bottom_nav_controller.dart';
@@ -28,10 +29,14 @@ class _WishListScreenState extends State<WishListScreen> {
   Future<void> _checkTokenAndFetchWishlist() async {
     bool hastoken = await _authController.isTokenAvailable();
     if (hastoken) {
-      _wishListController.getWishLists();
+      bool result = await _wishListController.getWishLists();
+      if(result == false) {
+        showSnackBarMessage(context, _wishListController.errorMessage!, true);
+        Navigator.pushNamed(context, SignInScreen.name);
+      }
     } else {
       showSnackBarMessage(context, "Token not found!", true);
-      Navigator.pushNamed(context, SignUpScreen.name);
+      Navigator.pushNamed(context, SignInScreen.name);
     }
   }
 

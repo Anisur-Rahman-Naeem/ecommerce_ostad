@@ -49,7 +49,7 @@ class ProductDetailsModel {
         : [];
     slug = json['slug'];
     metaDescription = json['meta_description'] ?? '';
-    photos = json['photos'].cast<String>();
+    photos = json['photos'] != null ? List<String>.from(json['photos']) : [];
     colors = json['colors'] != null ? List<String>.from(json['colors']) : [];
     sizes = json['sizes'] != null ? List<String>.from(json['sizes']) : [];
     tags = json['tags'] != null ? List<String>.from(json['tags']) : [];

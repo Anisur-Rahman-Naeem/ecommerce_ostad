@@ -1,5 +1,6 @@
 import 'package:ecommerce_ostad/features/common/ui/widgets/centered_circular_progress_indicator.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/snack_bar_message.dart';
+import 'package:ecommerce_ostad/features/product/review/ui/controllers/review_model_controller.dart';
 import 'package:ecommerce_ostad/features/product/review/ui/controllers/writing_review_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,13 @@ class _WritingReviewScreenState extends State<WritingReviewScreen> {
   final TextEditingController _commentTEController = TextEditingController();
   final WritingReviewController _writingReviewController =
       Get.find<WritingReviewController>();
+  final ReviewModelController _reviewModelController = Get.find<ReviewModelController>();
 
+  @override
+  void initState() {
+    _writingReviewController.updateRating(0);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,9 +131,10 @@ class _WritingReviewScreenState extends State<WritingReviewScreen> {
         widget.productId,
         _writingReviewController.rating.value,
         _commentTEController.text);
-    if (result) {
+    if (result && mounted) {
       showSnackBarMessage(context, 'Review Created');
       Navigator.pop(context);
+      _reviewModelController.getReviews(widget.productId);
     }
   }
 }

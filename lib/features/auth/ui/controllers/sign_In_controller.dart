@@ -11,6 +11,13 @@ class SignInController extends GetxController {
 
   String? _errorMessage;
 
+  bool show = true;
+
+  void onTapped(){
+    show = !show;
+    update();
+  }
+
   String? get errorMessage => _errorMessage;
 
   Future<bool> signIn(String email, String password) async {

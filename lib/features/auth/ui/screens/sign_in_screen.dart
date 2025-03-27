@@ -1,5 +1,5 @@
 import 'package:ecommerce_ostad/features/auth/ui/controllers/sign_In_controller.dart';
-import 'package:ecommerce_ostad/features/auth/ui/screens/otp_verification_screen.dart';
+import 'package:ecommerce_ostad/features/auth/ui/screens/sign_up_screen.dart';
 import 'package:ecommerce_ostad/features/auth/ui/widgets/app_icon_widget.dart';
 import 'package:ecommerce_ostad/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:ecommerce_ostad/features/common/ui/widgets/centered_circular_progress_indicator.dart';
@@ -65,18 +65,24 @@ class _SignInScreenState extends State<SignInScreen> {
                   },
                 ),
                 const SizedBox(height: 8),
-                TextFormField(
-                  obscureText: true,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  controller: _passwordTEController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(hintText: "Password"),
-                  validator: (String? value) {
-                    if (value?.trim().isEmpty ?? true) {
-                      return "Enter your password";
-                    }
-                    return null;
-                  },
+                GetBuilder<SignInController>(
+                  builder: (controller) {
+                    return TextFormField(
+                      obscureText: controller.show,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      controller: _passwordTEController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(hintText: "Password",suffixIcon: TextButton(onPressed: (){
+                        controller.onTapped();
+                      }, child: Text(controller.show ?"Show" : "Hide", style: const TextStyle(color: Colors.grey),))),
+                      validator: (String? value) {
+                        if (value?.trim().isEmpty ?? true) {
+                          return "Enter your password";
+                        }
+                        return null;
+                      },
+                    );
+                  }
                 ),
                 const SizedBox(height: 24),
                 GetBuilder<SignInController>(builder: (controller) {
@@ -87,7 +93,17 @@ class _SignInScreenState extends State<SignInScreen> {
                     onPressed: _onTapNextButton,
                     child: const Text("Sign in"),
                   );
-                })
+                }),
+                const SizedBox(height: 4),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, SignUpScreen.name);
+                  },
+                  child: const Text(
+                    "Sign Up Now",
+                    style: TextStyle(color: Colors.blue), // Change color here
+                  ),
+                )
               ],
             ),
           ),
